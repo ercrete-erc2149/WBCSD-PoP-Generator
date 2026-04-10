@@ -1,32 +1,1020 @@
-WBCSD
-Plan on a Page Generator
-Annual Meeting 2026 · Montreux, Switzerland
-Pilot v2 · KAM Team Tool
-STEPS
-1 Member details 2 Attendees & contact 3 Session recommendations 4 Bilateral meetings 5 Preview & generate
-ABOUT
-Fill in each step to generate a personalised Plan on a Page .pptx.  Sessions are auto-suggested based on focus areas. You can add or remove any session.
-Member details
-Basic information about the member company and their engagement type.
-COMPANY NAME
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WBCSD · Plan on a Page Generator</title>
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+<style>
+  :root {
+    --pearl: #F0EDE6; --pearl-dark: #E0DDD5; --charcoal: #2A2825;
+    --orange: #F8781E; --olive: #61704B; --spruce: #465C66;
+    --sand: #CAB6A5; --sage: #C3CBB6; --white: #FFFFFF; --radius: 6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Georgia', serif; background: var(--pearl); color: var(--charcoal); min-height: 100vh; }
+  .app-header { background: var(--charcoal); padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--orange); }
+  .app-header .brand { display: flex; align-items: center; gap: 1rem; }
+  .app-header .wbcsd-badge { background: var(--orange); color: white; font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; padding: 6px 12px; letter-spacing: 1px; }
+  .app-header h1 { color: var(--pearl); font-size: 1.1rem; font-weight: normal; font-style: italic; }
+  .app-header .subtitle { color: var(--sand); font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.5px; }
+  .app-body { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 70px); }
+  .sidebar { background: var(--charcoal); padding: 1.5rem; border-right: 1px solid #3a3835; overflow-y: auto; }
+  .sidebar-section { margin-bottom: 2rem; }
+  .sidebar-label { font-family: Arial, sans-serif; font-size: 9px; letter-spacing: 1.5px; color: var(--orange); text-transform: uppercase; margin-bottom: 0.75rem; display: block; }
+  .nav-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.75rem; border-radius: var(--radius); cursor: pointer; font-family: Arial, sans-serif; font-size: 13px; color: var(--sage); transition: all 0.15s; border: none; background: none; width: 100%; text-align: left; }
+  .nav-item:hover { background: rgba(255,255,255,0.06); color: var(--pearl); }
+  .nav-item.active { background: var(--orange); color: white; }
+  .nav-item .step-num { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
+  .nav-item.active .step-num { background: rgba(255,255,255,0.3); }
+  .nav-item.done .step-num { background: var(--olive); color: white; }
+  .nav-item.done { color: var(--sage); }
+  .main { padding: 2rem 2.5rem; overflow-y: auto; }
+  .step-panel { display: none; }
+  .step-panel.active { display: block; }
+  .step-header { margin-bottom: 1.75rem; }
+  .step-header h2 { font-size: 1.6rem; color: var(--charcoal); font-weight: normal; margin-bottom: 0.3rem; }
+  .step-header h2 em { color: var(--orange); }
+  .step-header p { font-family: Arial, sans-serif; font-size: 13px; color: var(--spruce); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .form-grid.thirds { grid-template-columns: 1fr 1fr 1fr; }
+  .form-grid.quads { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 1px; color: var(--orange); text-transform: uppercase; }
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea { border: 1px solid var(--sand); border-radius: var(--radius); padding: 0.6rem 0.75rem; font-family: Arial, sans-serif; font-size: 13px; color: var(--charcoal); background: white; transition: border-color 0.15s; outline: none; }
+  input:focus, select:focus, textarea:focus { border-color: var(--orange); }
+  textarea { resize: vertical; min-height: 70px; }
+  .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .radio-pill { display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border: 1.5px solid var(--sand); border-radius: 20px; cursor: pointer; font-family: Arial, sans-serif; font-size: 12px; color: var(--spruce); transition: all 0.15s; user-select: none; }
+  .radio-pill input { display: none; }
+  .radio-pill:has(input:checked) { border-color: var(--orange); background: #FEF0E6; color: var(--orange); font-weight: bold; }
+  .section-divider { border: none; border-top: 1px solid var(--sand); margin: 1.5rem 0; }
+  .section-title { font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 1.5px; color: var(--spruce); text-transform: uppercase; margin-bottom: 1rem; }
+  .bilat-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+  .bilat-card { background: var(--pearl-dark); border: 1px solid var(--sand); border-left: 3px solid var(--orange); border-radius: var(--radius); padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: end; }
+  .bilat-card .remove-btn { background: none; border: none; cursor: pointer; color: var(--sand); font-size: 16px; padding: 0.3rem; border-radius: 4px; transition: color 0.15s; }
+  .bilat-card .remove-btn:hover { color: var(--orange); }
+  .add-btn { display: flex; align-items: center; gap: 0.5rem; background: none; border: 1.5px dashed var(--sand); border-radius: var(--radius); padding: 0.6rem 1rem; font-family: Arial, sans-serif; font-size: 13px; color: var(--spruce); cursor: pointer; transition: all 0.15s; width: fit-content; }
+  .add-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .focus-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; margin-bottom: 1rem; }
+  .focus-tag { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border: 1.5px solid var(--sand); border-radius: var(--radius); cursor: pointer; user-select: none; font-family: Arial, sans-serif; font-size: 12px; color: var(--spruce); transition: all 0.15s; }
+  .focus-tag input { display: none; }
+  .focus-tag:has(input:checked) { border-color: var(--olive); background: #EEF1E8; color: var(--olive); }
+  .focus-tag .dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--sand); flex-shrink: 0; transition: all 0.15s; }
+  .focus-tag:has(input:checked) .dot { background: var(--olive); border-color: var(--olive); }
+  .sessions-container { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+  .session-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.65rem 0.85rem; border: 1px solid var(--sand); border-radius: var(--radius); background: white; cursor: pointer; transition: all 0.15s; }
+  .session-item:hover { border-color: var(--spruce); }
+  .session-item.selected { border-color: var(--olive); background: #EEF1E8; }
+  .session-item.social-event { border-color: var(--sand); background: #F5F0E8; font-style: italic; }
+  .session-item.social-event.selected { border-color: var(--orange); background: #FEF0E6; }
+  .session-item input[type="checkbox"] { margin-top: 2px; accent-color: var(--olive); flex-shrink: 0; }
+  .session-info { flex: 1; }
+  .session-title { font-family: Arial, sans-serif; font-size: 12.5px; color: var(--charcoal); margin-bottom: 2px; }
+  .session-meta { font-family: Arial, sans-serif; font-size: 11px; color: var(--spruce); }
+  .session-day-badge { font-family: Arial, sans-serif; font-size: 10px; background: var(--pearl-dark); color: var(--spruce); padding: 2px 6px; border-radius: 3px; white-space: nowrap; align-self: flex-start; margin-top: 1px; }
+  .session-item.suggested { border-left: 3px solid var(--olive); }
+  .suggested-label { font-family: Arial, sans-serif; font-size: 9px; color: var(--olive); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+  .preview-card { background: white; border: 1px solid var(--sand); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; }
+  .preview-card h3 { font-size: 1rem; font-weight: normal; margin-bottom: 0.25rem; color: var(--charcoal); }
+  .preview-card .preview-sub { font-family: Arial, sans-serif; font-size: 12px; color: var(--spruce); margin-bottom: 1rem; }
+  .preview-sessions { display: flex; flex-direction: column; gap: 0.3rem; }
+  .preview-session { font-family: Arial, sans-serif; font-size: 12px; color: var(--charcoal); padding: 0.3rem 0; border-bottom: 1px solid var(--pearl-dark); display: flex; gap: 0.5rem; }
+  .preview-session .day { color: var(--orange); font-weight: bold; min-width: 24px; }
+  .preview-session.social { font-style: italic; color: var(--spruce); }
+  .btn-row { display: flex; gap: 1rem; margin-top: 2rem; align-items: center; }
+  .btn { padding: 0.7rem 1.5rem; border-radius: var(--radius); font-family: Arial, sans-serif; font-size: 13px; cursor: pointer; border: none; transition: all 0.15s; font-weight: bold; letter-spacing: 0.3px; }
+  .btn-primary { background: var(--orange); color: white; }
+  .btn-primary:hover { background: #e06a15; }
+  .btn-secondary { background: var(--pearl-dark); color: var(--charcoal); border: 1px solid var(--sand); }
+  .btn-secondary:hover { border-color: var(--charcoal); }
+  .btn-generate { background: var(--olive); color: white; padding: 0.85rem 2rem; font-size: 14px; }
+  .btn-generate:hover { background: #526040; }
+  .info-box { background: #EEF1E8; border: 1px solid var(--sage); border-radius: var(--radius); padding: 0.75rem 1rem; font-family: Arial, sans-serif; font-size: 12px; color: var(--olive); margin-bottom: 1rem; }
+  .info-box.orange { background: #FEF0E6; border-color: var(--sand); color: #993C1D; }
+  .filter-row { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .filter-btn { padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid var(--sand); background: none; font-family: Arial, sans-serif; font-size: 11px; color: var(--spruce); cursor: pointer; transition: all 0.15s; }
+  .filter-btn.active { background: var(--charcoal); color: white; border-color: var(--charcoal); }
+  .generating { display: none; align-items: center; gap: 0.75rem; font-family: Arial, sans-serif; font-size: 13px; color: var(--spruce); }
+  .generating.show { display: flex; }
+  .spinner { width: 18px; height: 18px; border: 2px solid var(--sand); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .monday-events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }
+  .mon-event-pill { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.85rem; border: 1.5px solid var(--sand); border-radius: var(--radius); cursor: pointer; user-select: none; font-family: Arial, sans-serif; font-size: 12px; color: var(--spruce); transition: all 0.15s; }
+  .mon-event-pill input { display: none; }
+  .mon-event-pill:has(input:checked) { border-color: var(--olive); background: #EEF1E8; color: var(--olive); }
+  .att-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--pearl-dark); }
+  .att-row:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
 
-MEMBER TYPE
-            Select type
-            Council Member (CM)
-            Alternate Council Member (ACM)
-            Liaison Delegate (LD)
-            Alternate Liaison Delegate (ALD)
-            CM + LD attending (mixed)
-            Prospect
-          
-INDUSTRY / SECTOR
+<header class="app-header">
+  <div class="brand">
+    <div class="wbcsd-badge">WBCSD</div>
+    <div>
+      <h1>Plan on a Page <em>Generator</em></h1>
+      <div class="subtitle">Annual Meeting 2026 · Montreux, Switzerland</div>
+    </div>
+  </div>
+  <div style="font-family:Arial,sans-serif;font-size:11px;color:var(--sand);">Pilot v2 · KAM Team Tool</div>
+</header>
 
-ATTENDING EDUCATION DAY? (MON 27 APRIL — IMD LAUSANNE)
-YES NO
+<div class="app-body">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <span class="sidebar-label">Steps</span>
+      <button class="nav-item active" onclick="goTo(1)" id="nav1"><span class="step-num">1</span> Member details</button>
+      <button class="nav-item" onclick="goTo(2)" id="nav2"><span class="step-num">2</span> Attendees & contact</button>
+      <button class="nav-item" onclick="goTo(3)" id="nav3"><span class="step-num">3</span> Session recommendations</button>
+      <button class="nav-item" onclick="goTo(4)" id="nav4"><span class="step-num">4</span> Bilateral meetings</button>
+      <button class="nav-item" onclick="goTo(5)" id="nav5"><span class="step-num">5</span> Preview & generate</button>
+    </div>
+    <div class="sidebar-section">
+      <span class="sidebar-label">About</span>
+      <p style="font-family:Arial,sans-serif;font-size:11px;color:var(--sage);line-height:1.6;">Fill in each step to generate a personalised Plan on a Page .pptx.<br><br>Sessions are auto-suggested based on focus areas. You can add or remove any session.</p>
+    </div>
+  </aside>
 
-MONDAY 27 APRIL — INVITE-ONLY EVENTS — SELECT ANY THE MEMBER HAS BEEN INVITED TO
-🌐 GLOBAL NETWORK PARTNERS
-♻️ GLOBAL CIRCULARITY PROTOCOL
-⚙️ CRITICAL MATERIALS COLLECTIVE
-🌲 FOREST SOLUTIONS GROUP
-Next →
+  <main class="main">
+
+    <!-- STEP 1 -->
+    <div class="step-panel active" id="step1">
+      <div class="step-header">
+        <h2>Member <em>details</em></h2>
+        <p>Basic information about the member company and their engagement type.</p>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Company name</label>
+          <input type="text" id="company" placeholder="e.g. Charm Industrial" oninput="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label>Member type</label>
+          <select id="memberType" onchange="updateMemberType()">
+            <option value="">Select type</option>
+            <option value="CM">Council Member (CM)</option>
+            <option value="ACM">Alternate Council Member (ACM)</option>
+            <option value="LD">Liaison Delegate (LD)</option>
+            <option value="ALD">Alternate Liaison Delegate (ALD)</option>
+            <option value="CMLD">CM + LD attending (mixed)</option>
+            <option value="Prospect">Prospect</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Industry / sector</label>
+          <input type="text" id="sector" placeholder="e.g. Carbon Removal, Energy">
+        </div>
+        <div class="form-group">
+          <label>Attending Education Day? (Mon 27 April — IMD Lausanne)</label>
+          <div class="radio-group" style="margin-top:4px;">
+            <label class="radio-pill"><input type="radio" name="eduDay" value="yes" onchange="onEduDayChange()"> Yes</label>
+            <label class="radio-pill"><input type="radio" name="eduDay" value="no" checked onchange="onEduDayChange()"> No</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monday invite-only events — always visible, independent of Education Day -->
+      <hr class="section-divider">
+      <p class="section-title">Monday 27 April — invite-only events <span style="color:var(--sand);font-weight:normal;">— select any the member has been invited to</span></p>
+      <div class="monday-events-grid" id="mondayEventsGrid">
+        <label class="mon-event-pill"><input type="checkbox" value="GNP" onchange="onMonInviteChange()"><span>🌐 Global Network Partners</span></label>
+        <label class="mon-event-pill"><input type="checkbox" value="GCP" onchange="onMonInviteChange()"><span>♻️ Global Circularity Protocol</span></label>
+        <label class="mon-event-pill"><input type="checkbox" value="CMC" onchange="onMonInviteChange()"><span>⚙️ Critical Materials Collective</span></label>
+        <label class="mon-event-pill"><input type="checkbox" value="FSG" onchange="onMonInviteChange()"><span>🌲 Forest Solutions Group</span></label>
+      </div>
+
+      <div id="memberTypeInfo" class="info-box" style="display:none; margin-top:1rem;"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goTo(2)">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-panel" id="step2">
+      <div class="step-header">
+        <h2><em>Attendees</em></h2>
+        <p>Who is attending from the member company.</p>
+      </div>
+
+      <p class="section-title">Attendees (up to 4)</p>
+      <div id="attendee-list"></div>
+      <button class="add-btn" onclick="addAttendee()" id="addAttBtn">+ Add another attendee</button>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTo(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(3)">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-panel" id="step3">
+      <div class="step-header">
+        <h2>Session <em>recommendations</em></h2>
+        <p>Select focus areas to auto-suggest sessions. Unselecting a topic removes its suggestions. Max 6 per day.</p>
+      </div>
+
+      <div class="info-box" style="margin-bottom:1rem;">⭐ <strong>Executive track sessions</strong> are marked with a star. (A)LDs are welcome to attend these as observers.</div>
+      <p class="section-title">Focus areas (select all that apply)</p>
+      <div class="focus-grid" id="focusGrid"></div>
+
+      <hr class="section-divider">
+      <p class="section-title">Sessions <span style="color:var(--sand);font-weight:normal;">— suggested sessions are highlighted</span></p>
+
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="filterSessions('all',this)">All days</button>
+        <button class="filter-btn" id="filterMonBtn" onclick="filterSessions('Mon',this)" style="display:none;">Monday 27</button>
+        <button class="filter-btn" onclick="filterSessions('Tue',this)">Tuesday 28</button>
+        <button class="filter-btn" onclick="filterSessions('Wed',this)">Wednesday 29</button>
+        <button class="filter-btn" onclick="filterSessions('Thu',this)">Thursday 30</button>
+      </div>
+
+      <div class="sessions-container" id="sessionList"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTo(2)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(4)">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-panel" id="step4">
+      <div class="step-header">
+        <h2>Bilateral <em>meetings</em></h2>
+        <p>Add confirmed or planned bilateral meetings. These will feature prominently on the slide.</p>
+      </div>
+
+      <div class="bilat-list" id="bilatList"></div>
+      <button class="add-btn" onclick="addBilat()">+ Add bilateral meeting</button>
+
+      <hr class="section-divider">
+      <p class="section-title">Others to connect with</p>
+      <div class="form-group">
+        <label>Names or groups (one per line)</label>
+        <textarea id="othersConnect" placeholder="e.g. WBCSD Carbon Removals program leads&#10;ERA program team&#10;CDR corporate buyer network" oninput="updatePreview()"></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTo(3)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(5)">Preview →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step-panel" id="step5">
+      <div class="step-header">
+        <h2>Preview <em>&amp; generate</em></h2>
+        <p>Review the summary below, then generate the .pptx file.</p>
+      </div>
+
+      <div class="preview-card" id="previewCard">
+        <h3 id="prev-name">—</h3>
+        <div class="preview-sub" id="prev-sub">—</div>
+        <div class="preview-sessions" id="prev-sessions"></div>
+      </div>
+
+      <div class="preview-card">
+        <p class="section-title">Bilateral meetings</p>
+        <div id="prev-bilats" style="font-family:Arial,sans-serif;font-size:12px;color:var(--charcoal);">None added</div>
+      </div>
+
+      <div class="info-box">
+        ★ <strong>After generating, remember to manually add to the slide:</strong><br>
+        <span style="display:block;margin-top:0.4rem;">① Replace <strong>[ Insert company logo ]</strong> in the top-right corner</span>
+        <span style="display:block;margin-top:0.2rem;">② Replace <strong>[ Insert KAM photo ]</strong> with your headshot in the contact section</span>
+        <span style="display:block;margin-top:0.2rem;">③ The WBCSD logo will appear automatically at the bottom-left ✓</span>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTo(4)">← Back</button>
+        <button class="btn btn-generate" onclick="generatePPTX()">⬇ Generate .pptx</button>
+        <div class="generating" id="generatingMsg"><div class="spinner"></div> Generating your file…</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const FOCUS_AREAS = [
+  "Carbon removal & CDR","Carbon markets & pricing","Electrification & energy",
+  "Physical risk & resilience","Nature & biodiversity","Corporate reporting",
+  "Value chain & Scope 3","Policy & regulation","Finance & risk",
+  "Built environment","Food & agriculture","Just transition"
+];
+
+const MON_EVENTS = {
+  GNP: { label: "Global Network Partners meeting", time: "10:30 – 16:00", location: "Montreux (invite-only)" },
+  GCP: { label: "Global Circularity Protocol Community meeting", time: "10:30 – 16:00", location: "Montreux (invite-only)" },
+  CMC: { label: "Critical Materials Collective", time: "10:30 – 16:00", location: "Montreux (invite-only)" },
+  FSG: { label: "Forest Solutions Group meeting", time: "10:30 – 16:00", location: "Montreux (invite-only)" }
+};
+
+const ALL_SESSIONS = [
+  // MONDAY 27 (Education Day sessions) — exec tags per agenda
+  { id: 0,  day: "Mon", dayFull: "Monday 27", time: "09:15 – 10:00", title: "Opening keynote: Leading sustainability in an age of uncertainty", social: false, exec: false, tags: [] },
+  { id: 50, day: "Mon", dayFull: "Monday 27", time: "10:30 – 15:30", title: "Track A: Sustainability strategy in a fragmented world", social: false, exec: true, tags: ["Policy & regulation","Finance & risk"] },
+  { id: 51, day: "Mon", dayFull: "Monday 27", time: "10:30 – 15:30", title: "Track B: Leading with resilience", social: false, exec: true, tags: [] },
+  { id: 52, day: "Mon", dayFull: "Monday 27", time: "10:30 – 15:30", title: "Track C: From business case to behavior change", social: false, exec: false, tags: ["Finance & risk","Corporate reporting"] },
+  { id: 53, day: "Mon", dayFull: "Monday 27", time: "18:30 – 22:00", title: "★ Annual Meeting Executive Dinner", social: true, exec: true, tags: [], cmOnly: true },
+
+  // TUESDAY 28
+  { id: 1,  day: "Tue", dayFull: "Tuesday 28", time: "07:30 – 08:30", title: "Driving business value through sustainability", social: false, exec: true, tags: ["Corporate reporting","Finance & risk"] },
+  { id: 2,  day: "Tue", dayFull: "Tuesday 28", time: "07:30 – 08:30", title: "Regional dialogue breakfast", social: false, exec: true, tags: ["Policy & regulation"] },
+  { id: 3,  day: "Tue", dayFull: "Tuesday 28", time: "09:00 – 12:30", title: "Plenary: Bringing the future into focus", social: false, exec: false, tags: ["Carbon removal & CDR","Carbon markets & pricing","Electrification & energy","Physical risk & resilience","Nature & biodiversity","Corporate reporting","Value chain & Scope 3","Policy & regulation","Finance & risk"] },
+  { id: 4,  day: "Tue", dayFull: "Tuesday 28", time: "12:45 – 14:00", title: "Hands-on clinic — product carbon data in practice (PACT)", social: false, exec: false, tags: ["Carbon markets & pricing","Value chain & Scope 3","Carbon removal & CDR"] },
+  { id: 5,  day: "Tue", dayFull: "Tuesday 28", time: "12:45 – 14:00", title: "Engaging value chains to support emissions reduction and resilience", social: false, exec: true, tags: ["Value chain & Scope 3","Carbon removal & CDR"] },
+  { id: 6,  day: "Tue", dayFull: "Tuesday 28", time: "12:45 – 14:00", title: "Translating systemic risk to corporate action", social: false, exec: true, tags: ["Physical risk & resilience","Finance & risk","Policy & regulation"] },
+  { id: 7,  day: "Tue", dayFull: "Tuesday 28", time: "14:30 – 15:30", title: "Safeguarding progress: a dynamic risk assessment for the sustainability agenda", social: false, exec: true, tags: ["Corporate reporting","Finance & risk"] },
+  { id: 8,  day: "Tue", dayFull: "Tuesday 28", time: "14:30 – 15:30", title: "Beyond 2030: identifying no-regret decarbonization pathways", social: false, exec: true, tags: ["Carbon removal & CDR","Carbon markets & pricing","Electrification & energy"] },
+  { id: 9,  day: "Tue", dayFull: "Tuesday 28", time: "14:30 – 15:30", title: "Risk transfer of physical risk — at what price?", social: false, exec: true, tags: ["Physical risk & resilience","Finance & risk"] },
+  { id: 10, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "ESG ratings: friend or foe? A debate", social: false, exec: false, tags: ["Corporate reporting","Finance & risk","Carbon markets & pricing"] },
+  { id: 11, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "From hotspots to solutions: enabling targeted emissions reduction (ERA)", social: false, exec: false, tags: ["Value chain & Scope 3","Carbon removal & CDR"] },
+  { id: 54, day: "Tue", dayFull: "Tuesday 28", time: "17:15 – 18:45", title: "★ Prospect Cocktail", social: true, exec: false, tags: [], prospectOnly: true },
+  { id: 12, day: "Tue", dayFull: "Tuesday 28", time: "18:00 – 22:00", title: "★ Liaison Delegate Dinner", social: true, exec: false, tags: [], ldOnly: true },
+  { id: 55, day: "Tue", dayFull: "Tuesday 28", time: "18:30 – 22:00", title: "★ Council Member Networking Dinner", social: true, exec: true, tags: [], cmOnly: true },
+
+  // WEDNESDAY 29
+  { id: 14, day: "Wed", dayFull: "Wednesday 29", time: "09:00 – 10:30", title: "Advancing carbon accounting & target setting (GHG Protocol / SBTi / ISO)", social: false, exec: false, tags: ["Carbon removal & CDR","Carbon markets & pricing","Corporate reporting","Value chain & Scope 3"] },
+  { id: 15, day: "Wed", dayFull: "Wednesday 29", time: "09:00 – 10:30", title: "Sectoral perspectives on practical pathways for electrification", social: false, exec: false, tags: ["Electrification & energy"] },
+  { id: 16, day: "Wed", dayFull: "Wednesday 29", time: "09:00 – 10:30", title: "Advancing the bioeconomy, nature- and land-based value chains", social: false, exec: false, tags: ["Nature & biodiversity","Food & agriculture"] },
+  { id: 17, day: "Wed", dayFull: "Wednesday 29", time: "11:15 – 12:45", title: "Future of corporate reporting: signals, shifts & scenarios", social: false, exec: false, tags: ["Corporate reporting","Carbon markets & pricing","Carbon removal & CDR"] },
+  { id: 18, day: "Wed", dayFull: "Wednesday 29", time: "11:15 – 12:45", title: "Deploying nature-based solutions across agriculture, forestry & water dependent sectors", social: false, exec: false, tags: ["Nature & biodiversity","Food & agriculture","Physical risk & resilience"] },
+  { id: 19, day: "Wed", dayFull: "Wednesday 29", time: "11:15 – 12:45", title: "Positive policy lab: business and government moving faster together", social: false, exec: false, tags: ["Policy & regulation","Carbon markets & pricing"] },
+  { id: 20, day: "Wed", dayFull: "Wednesday 29", time: "13:00 – 14:30", title: "From risk to return — linking nature to P&L, cash flow, risk & capex", social: false, exec: false, tags: ["Nature & biodiversity","Finance & risk","Carbon removal & CDR"] },
+  { id: 21, day: "Wed", dayFull: "Wednesday 29", time: "13:00 – 14:30", title: "New pathways in circular textiles: reducing waste and improving outcomes", social: false, exec: false, tags: ["Value chain & Scope 3"] },
+  { id: 22, day: "Wed", dayFull: "Wednesday 29", time: "15:00 – 16:00", title: "Financing resilience in productive landscapes", social: false, exec: false, tags: ["Nature & biodiversity","Food & agriculture","Finance & risk"] },
+  { id: 23, day: "Wed", dayFull: "Wednesday 29", time: "15:00 – 16:00", title: "Positive policy engagement approaches in practice", social: false, exec: false, tags: ["Policy & regulation"] },
+  { id: 24, day: "Wed", dayFull: "Wednesday 29", time: "16:30 – 17:30", title: "Carbon capture and storage as a way to reduce value chain emissions", social: false, exec: false, tags: ["Carbon removal & CDR","Value chain & Scope 3"] },
+  { id: 25, day: "Wed", dayFull: "Wednesday 29", time: "16:30 – 17:30", title: "Driving business innovation through digital avoided emissions solutions", social: false, exec: false, tags: ["Carbon removal & CDR","Carbon markets & pricing"] },
+  { id: 26, day: "Wed", dayFull: "Wednesday 29", time: "18:00 – 20:00", title: "★ Gala cocktail dînatoire", social: true, exec: false, tags: [] },
+
+  // THURSDAY 30
+  { id: 27, day: "Thu", dayFull: "Thursday 30", time: "09:00 – 10:30", title: "Exploring how market instruments can support low emissions solutions", social: false, exec: false, tags: ["Carbon markets & pricing","Carbon removal & CDR","Policy & regulation"] },
+  { id: 28, day: "Thu", dayFull: "Thursday 30", time: "09:00 – 10:30", title: "Driving visibility in your value chain: disclosure meets risks", social: false, exec: false, tags: ["Value chain & Scope 3","Corporate reporting"] },
+  { id: 29, day: "Thu", dayFull: "Thursday 30", time: "09:00 – 10:30", title: "Measuring what matters: metrics for decision-making across sustainability and health", social: false, exec: false, tags: ["Corporate reporting","Finance & risk"] },
+  { id: 30, day: "Thu", dayFull: "Thursday 30", time: "11:15 – 12:45", title: "Making it count: financial quantification of sustainability risk & opportunity", social: false, exec: false, tags: ["Finance & risk","Corporate reporting","Carbon removal & CDR"] },
+  { id: 31, day: "Thu", dayFull: "Thursday 30", time: "11:15 – 12:45", title: "Shaping the new Nature Measurement Protocol", social: false, exec: false, tags: ["Nature & biodiversity","Carbon removal & CDR"] },
+  { id: 32, day: "Thu", dayFull: "Thursday 30", time: "11:15 – 12:45", title: "Carbon dioxide removals: a core asset in your value chain", social: false, exec: false, tags: ["Carbon removal & CDR","Value chain & Scope 3","Carbon markets & pricing"] },
+  { id: 33, day: "Thu", dayFull: "Thursday 30", time: "12:45 – 14:30", title: "Nature Clinic: integrating nature into corporate strategy", social: false, exec: true, tags: ["Nature & biodiversity","Finance & risk"] },
+
+  // TUESDAY 28 — missing sessions
+  { id: 56, day: "Tue", dayFull: "Tuesday 28", time: "07:30 – 08:30", title: "First Timers briefing", social: false, exec: false, tags: [] },
+  { id: 57, day: "Tue", dayFull: "Tuesday 28", time: "14:30 – 15:30", title: "Operationalizing sustainability in China, India, and across Asia", social: false, exec: false, tags: ["Value chain & Scope 3","Policy & regulation"] },
+  { id: 58, day: "Tue", dayFull: "Tuesday 28", time: "14:30 – 15:30", title: "How executives are responding to a fragmented world, with Barometer insights", social: false, exec: true, tags: ["Policy & regulation","Finance & risk"] },
+  { id: 59, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "Council Member & executives feedback session", social: false, exec: true, tags: [], cmOnly: true },
+  { id: 60, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "Mobilizing action to accelerate emissions reduction by 2030", social: false, exec: false, tags: ["Carbon removal & CDR","Value chain & Scope 3"] },
+  { id: 61, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "Business use cases of sustainability from China", social: false, exec: false, tags: ["Value chain & Scope 3","Policy & regulation"] },
+  { id: 62, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "Circular economy strategies to reduce exposure to critical material volatility", social: false, exec: true, tags: ["Value chain & Scope 3","Carbon markets & pricing"] },
+  { id: 63, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "Connecting Data for circularity across value chains: TIP, PACT, GCP and mobility", social: false, exec: false, tags: ["Value chain & Scope 3"] },
+  { id: 64, day: "Tue", dayFull: "Tuesday 28", time: "17:15 – 18:45", title: "Council Member dialogue & drinks: sharing what keeps executives up at night", social: false, exec: true, tags: [], cmOnly: true },
+  { id: 65, day: "Tue", dayFull: "Tuesday 28", time: "17:15 – 18:45", title: "Becoming Nature Positive — short film screening & discussion", social: false, exec: false, tags: ["Nature & biodiversity"] },
+
+  // WEDNESDAY 29 — missing sessions
+  { id: 66, day: "Wed", dayFull: "Wednesday 29", time: "07:30 – 08:30", title: "From niche to norm: breaking the scale barrier for Alternative Feedstocks", social: false, exec: false, tags: ["Value chain & Scope 3","Nature & biodiversity"] },
+  { id: 67, day: "Wed", dayFull: "Wednesday 29", time: "07:30 – 08:30", title: "Leading in the Age of Electricity: clean electrification, smart demand, and grid readiness", social: false, exec: true, tags: ["Electrification & energy"] },
+  { id: 68, day: "Wed", dayFull: "Wednesday 29", time: "09:00 – 10:30", title: "Circular value chains for critical materials: strengthening delivery and impact", social: false, exec: false, tags: ["Value chain & Scope 3","Carbon markets & pricing"] },
+  { id: 69, day: "Wed", dayFull: "Wednesday 29", time: "09:00 – 10:30", title: "Making moves: a scenario game exploring political futures and sustainability", social: false, exec: true, tags: ["Policy & regulation","Finance & risk"] },
+  { id: 70, day: "Wed", dayFull: "Wednesday 29", time: "11:15 – 12:45", title: "Electrification in action: cities and corridors", social: false, exec: false, tags: ["Electrification & energy"] },
+  { id: 71, day: "Wed", dayFull: "Wednesday 29", time: "11:15 – 12:45", title: "Navigating AI & sustainability", social: false, exec: true, tags: ["Policy & regulation","Finance & risk"] },
+  { id: 72, day: "Wed", dayFull: "Wednesday 29", time: "13:00 – 14:30", title: "Operating across diverging markets: what works, what doesn't, what's next", social: false, exec: false, tags: ["Policy & regulation","Value chain & Scope 3"] },
+  { id: 73, day: "Wed", dayFull: "Wednesday 29", time: "15:00 – 16:00", title: "Meet the experts: Corporate Reporting Connectivity Forum", social: false, exec: false, tags: ["Corporate reporting"] },
+  { id: 74, day: "Wed", dayFull: "Wednesday 29", time: "15:00 – 16:00", title: "From ask to impact: strengthening the effectiveness of supplier engagement for sustainability", social: false, exec: false, tags: ["Value chain & Scope 3"] },
+  { id: 75, day: "Wed", dayFull: "Wednesday 29", time: "15:00 – 16:00", title: "Sustainability won't deliver itself: building the skills that matter", social: false, exec: false, tags: ["Corporate reporting","Finance & risk"] },
+  { id: 76, day: "Wed", dayFull: "Wednesday 29", time: "16:30 – 17:30", title: "Integrated transition planning and implementation", social: false, exec: false, tags: ["Carbon removal & CDR","Policy & regulation"] },
+  { id: 77, day: "Wed", dayFull: "Wednesday 29", time: "16:30 – 17:30", title: "The business case for community engagement: the unaffordable cost of doing nothing", social: false, exec: false, tags: ["Nature & biodiversity","Value chain & Scope 3","Finance & risk"] },
+  { id: 78, day: "Wed", dayFull: "Wednesday 29", time: "16:30 – 17:30", title: "Discussion on future WBCSD offers with Liaison Delegates", social: false, exec: false, tags: [], ldOnly: true },
+
+  // THURSDAY 30 — missing sessions
+  { id: 79, day: "Thu", dayFull: "Thursday 30", time: "07:30 – 08:30", title: "Carbon credits: updates on demand and supply", social: false, exec: false, tags: ["Carbon markets & pricing","Carbon removal & CDR"] },
+  { id: 80, day: "Thu", dayFull: "Thursday 30", time: "07:30 – 08:30", title: "Tire & Mobility community breakfast dialogue", social: false, exec: false, tags: ["Value chain & Scope 3"] },
+  { id: 81, day: "Thu", dayFull: "Thursday 30", time: "07:30 – 08:30", title: "Making insetting count in a changing standards landscape", social: false, exec: false, tags: ["Nature & biodiversity","Carbon removal & CDR","Food & agriculture"] },
+  { id: 82, day: "Thu", dayFull: "Thursday 30", time: "09:00 – 10:30", title: "From ambition to action: getting started with Integrated Product Performance steering", social: false, exec: false, tags: ["Corporate reporting","Value chain & Scope 3"] },
+  { id: 83, day: "Thu", dayFull: "Thursday 30", time: "09:00 – 10:30", title: "You set the agenda: Member-led conversations on climate, nature & people", social: false, exec: false, tags: [] },
+  { id: 84, day: "Thu", dayFull: "Thursday 30", time: "11:15 – 12:45", title: "Unlocking mind traps: leading sustainability in complexity", social: false, exec: false, tags: ["Finance & risk","Policy & regulation"] },
+  { id: 85, day: "Thu", dayFull: "Thursday 30", time: "11:15 – 12:45", title: "You set the agenda: Member-led conversations on climate, nature & people (2)", social: false, exec: false, tags: [] },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentStep = 1;
+let attendeeCount = 0;
+let bilatCount = 0;
+let selectedSessions = new Set();
+let sessionFilter = 'all';
+const MAX_PER_DAY = 6;
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function init() {
+  const fg = document.getElementById('focusGrid');
+  FOCUS_AREAS.forEach(f => {
+    const label = document.createElement('label');
+    label.className = 'focus-tag';
+    label.innerHTML = `<input type="checkbox" value="${f}" onchange="onFocusChange()"><span class="dot"></span>${f}`;
+    fg.appendChild(label);
+  });
+  // Add first two attendee rows by default
+  addAttendee(); addAttendee();
+  renderSessions();
+  addBilat();
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function goTo(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach((b,i) => {
+    b.classList.remove('active');
+    if (i+1 < n) b.classList.add('done'); else b.classList.remove('done');
+  });
+  document.getElementById('step'+n).classList.add('active');
+  document.getElementById('nav'+n).classList.add('active');
+  currentStep = n;
+  if (n === 5) buildPreview();
+}
+
+// ── EDUCATION DAY ─────────────────────────────────────────────────────────────
+function onEduDayChange() {
+  const yes = document.querySelector('input[name="eduDay"]:checked')?.value === 'yes';
+  document.getElementById('filterMonBtn').style.display = yes ? '' : 'none';
+  // Auto-add Mon 27 opening keynote if edu day selected
+  if (yes) { selectedSessions.add(0); } else {
+    [0,50,51,52,53].forEach(id => selectedSessions.delete(id));
+  }
+  renderSessions();
+  updatePreview();
+}
+
+// ── MONDAY INVITE-ONLY EVENTS ─────────────────────────────────────────────────
+function onMonInviteChange() {
+  const anySelected = [...document.querySelectorAll('#mondayEventsGrid input:checked')].length > 0;
+  // Show Monday filter tab if any invite-only event is selected (or edu day is selected)
+  const eduDay = document.querySelector('input[name="eduDay"]:checked')?.value === 'yes';
+  document.getElementById('filterMonBtn').style.display = (anySelected || eduDay) ? '' : 'none';
+  updatePreview();
+}
+
+// ── MEMBER TYPE ───────────────────────────────────────────────────────────────
+function updateMemberType() {
+  const val = document.getElementById('memberType').value;
+  const box = document.getElementById('memberTypeInfo');
+  const isMixed = val === 'CMLD';
+
+  // Clear any previously auto-added social sessions
+  [12, 53, 54, 55].forEach(id => selectedSessions.delete(id));
+
+  if (!val) { box.style.display = 'none'; renderSessions(); return; }
+
+  const msgs = {
+    CM:      "Council Member → Executive dinner automatically added for Monday 27 April.",
+    ACM:     "Alternate Council Member → Executive dinner automatically added for Monday 27 April.",
+    LD:      "Liaison Delegate → LD Dinner automatically added for Tuesday 28 April. One attendee per company.",
+    ALD:     "Alternate Liaison Delegate → LD Dinner automatically added for Tuesday 28 April. One attendee per company.",
+    CMLD:    "Mixed CM + LD → One slide will be generated with all sessions. Executive track sessions marked ⭐ — (A)LDs welcome to observe. All three dinners auto-added.",
+    Prospect:"Prospect → Formal programme sessions available. Prospect Cocktail added for Tuesday 17:15 at MP Bar. No other social events."
+  };
+  box.style.display = 'block';
+  box.textContent = msgs[val];
+  box.className = (val === 'Prospect') ? 'info-box orange' : 'info-box';
+
+  if (val === 'CM' || val === 'ACM') { selectedSessions.add(53); selectedSessions.add(55); }
+  if (val === 'LD' || val === 'ALD')    selectedSessions.add(12);
+  if (val === 'CMLD') { selectedSessions.add(53); selectedSessions.add(55); selectedSessions.add(12); }
+  if (val === 'Prospect')               selectedSessions.add(54);
+
+  refreshBilatDropdowns();
+  renderSessions();
+  updatePreview();
+}
+
+// Refresh bilat cards to show/hide the "for attendee" dropdown based on current member type
+function refreshBilatDropdowns() {
+  const isMixedMode = document.getElementById('memberType').value === 'CMLD';
+  document.querySelectorAll('.bilat-card').forEach(card => {
+    let existing = card.querySelector('.bilat-for-group');
+    if (isMixedMode && !existing) {
+      // Add dropdown
+      const wrapper = document.createElement('div');
+      wrapper.className = 'form-group bilat-for-group';
+      wrapper.innerHTML = `<label>For attendee</label>
+        <select class="bilat-for" onchange="updatePreview()">
+          <option value="">(A)CM &amp; (A)LD</option>
+          <option value="CM">(A)CM only</option>
+          <option value="LD">(A)LD only</option>
+        </select>`;
+      // Insert before the remove button
+      const removeBtn = card.querySelector('.remove-btn');
+      card.insertBefore(wrapper, removeBtn);
+    } else if (!isMixedMode && existing) {
+      existing.remove();
+    }
+  });
+}
+
+// ── ATTENDEES ─────────────────────────────────────────────────────────────────
+function addAttendee() {
+  if (attendeeCount >= 4) return;
+  const list = document.getElementById('attendee-list');
+  const div = document.createElement('div');
+  div.className = 'att-row';
+  div.id = 'att-row-' + attendeeCount;
+  const placeholder = attendeeCount === 0 ? 'e.g. Harris Cohn' : 'Full name';
+  const rolePlaceholder = attendeeCount === 0 ? 'e.g. Head of Commercial Partnerships' : 'Title / role';
+  div.innerHTML = `
+    <div class="form-group">
+      <label>Attendee ${attendeeCount + 1} — full name</label>
+      <input type="text" class="att-name" placeholder="${placeholder}" oninput="updatePreview()">
+    </div>
+    <div class="form-group">
+      <label>Title / role</label>
+      <input type="text" class="att-role" placeholder="${rolePlaceholder}" oninput="updatePreview()">
+    </div>`;
+  list.appendChild(div);
+  attendeeCount++;
+  if (attendeeCount >= 4) document.getElementById('addAttBtn').style.display = 'none';
+}
+
+// ── MIXED CM/LD ATTENDEES ────────────────────────────────────────────────────
+let cmCount = 0, ldCount = 0;
+
+function addAttendeeCM() {
+  if (cmCount >= 3) return;
+  const list = document.getElementById('attendee-list-cm');
+  const div = document.createElement('div');
+  div.className = 'att-row';
+  div.innerHTML = `
+    <div class="form-group">
+      <label>CM Attendee ${cmCount + 1} — full name</label>
+      <input type="text" class="att-name-cm" placeholder="Full name" oninput="updatePreview()">
+    </div>
+    <div class="form-group">
+      <label>Title / role</label>
+      <input type="text" class="att-role-cm" placeholder="e.g. CEO" oninput="updatePreview()">
+    </div>`;
+  list.appendChild(div);
+  cmCount++;
+  if (cmCount >= 3) document.getElementById('addAttBtnCM').style.display = 'none';
+}
+
+function addAttendeeLD() {
+  if (ldCount >= 3) return;
+  const list = document.getElementById('attendee-list-ld');
+  const div = document.createElement('div');
+  div.className = 'att-row';
+  div.innerHTML = `
+    <div class="form-group">
+      <label>LD Attendee ${ldCount + 1} — full name</label>
+      <input type="text" class="att-name-ld" placeholder="Full name" oninput="updatePreview()">
+    </div>
+    <div class="form-group">
+      <label>Title / role</label>
+      <input type="text" class="att-role-ld" placeholder="e.g. Head of Sustainability" oninput="updatePreview()">
+    </div>`;
+  list.appendChild(div);
+  ldCount++;
+  if (ldCount >= 3) document.getElementById('addAttBtnLD').style.display = 'none';
+}
+
+// ── SESSIONS ──────────────────────────────────────────────────────────────────
+function onFocusChange() {
+  const checked = [...document.querySelectorAll('#focusGrid input:checked')].map(i => i.value);
+  const unchecked = [...document.querySelectorAll('#focusGrid input:not(:checked)')].map(i => i.value);
+  const memberType = document.getElementById('memberType').value;
+
+  // For each session, determine if it should be auto-suggested
+  ALL_SESSIONS.forEach(s => {
+    if (s.social) return; // never auto-toggle social events
+    const matchesChecked   = s.tags.some(t => checked.includes(t));
+    const matchesUnchecked = s.tags.some(t => unchecked.includes(t));
+    const matchesAny       = s.tags.some(t => checked.includes(t) || unchecked.includes(t));
+
+    if (matchesChecked && !selectedSessions.has(s.id)) {
+      // Only auto-add if under cap
+      if (countByDay(s.day) < MAX_PER_DAY) selectedSessions.add(s.id);
+    }
+    // If ALL matching tags are now unchecked and session was only auto-added (not manually added),
+    // remove it — we track this by checking if no checked focus area covers it
+    if (!matchesChecked && matchesAny) {
+      selectedSessions.delete(s.id);
+    }
+  });
+  renderSessions();
+}
+
+function filterSessions(day, btn) {
+  sessionFilter = day;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSessions();
+}
+
+function countByDay(day) {
+  return [...selectedSessions].filter(id => {
+    const s = ALL_SESSIONS.find(s => s.id === id);
+    return s && s.day === day && !s.social;
+  }).length;
+}
+
+function isSessionVisible(s) {
+  const memberType = document.getElementById('memberType').value;
+  const isProspect = memberType === 'Prospect';
+  const isCM = memberType === 'CM' || memberType === 'ACM' || memberType === 'CMLD';
+  const isLD = memberType === 'LD' || memberType === 'ALD' || memberType === 'CMLD';
+
+  if (s.cmOnly && !isCM) return false;
+  if (s.ldOnly && !isLD && !(!memberType)) return false;
+  if (s.prospectOnly && !isProspect) return false;
+  if (isProspect && (s.ldOnly || s.cmOnly)) return false;
+  return true;
+}
+
+function renderSessions() {
+  const checkedFocus = [...document.querySelectorAll('#focusGrid input:checked')].map(i => i.value);
+  const eduDay = document.querySelector('input[name="eduDay"]:checked')?.value === 'yes';
+  const container = document.getElementById('sessionList');
+  container.innerHTML = '';
+
+  let filtered = ALL_SESSIONS.filter(s => isSessionVisible(s));
+  if (!eduDay) filtered = filtered.filter(s => s.day !== 'Mon');
+  if (sessionFilter !== 'all') filtered = filtered.filter(s => s.day === sessionFilter);
+
+  // Sort chronologically: day order → time → socials last
+  const dayOrder = {Mon:0,Tue:1,Wed:2,Thu:3};
+  filtered.sort((a,b) => {
+    const dd = dayOrder[a.day] - dayOrder[b.day];
+    if (dd !== 0) return dd;
+    if (a.social !== b.social) return a.social ? 1 : -1;
+    return a.time.localeCompare(b.time);
+  });
+
+  const dayCounts = { Mon: countByDay('Mon'), Tue: countByDay('Tue'), Wed: countByDay('Wed'), Thu: countByDay('Thu') };
+
+  if (sessionFilter === 'all') {
+    const counterBar = document.createElement('div');
+    counterBar.style.cssText = 'display:flex;gap:0.75rem;margin-bottom:0.75rem;font-family:Arial,sans-serif;font-size:11px;flex-wrap:wrap;';
+    const days = eduDay ? ['Mon','Tue','Wed','Thu'] : ['Tue','Wed','Thu'];
+    const labels = {Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday'};
+    days.forEach(day => {
+      const count = dayCounts[day];
+      const over = count >= MAX_PER_DAY;
+      const span = document.createElement('span');
+      span.style.cssText = `padding:3px 10px;border-radius:3px;background:${over?'#FEF0E6':'#EEF1E8'};color:${over?'#F8781E':'#61704B'};font-weight:bold;`;
+      span.textContent = `${labels[day]}: ${count}/${MAX_PER_DAY}`;
+      counterBar.appendChild(span);
+    });
+    container.appendChild(counterBar);
+  }
+
+  filtered.forEach(s => {
+    const isSuggested = !s.social && checkedFocus.length > 0 && s.tags.some(t => checkedFocus.includes(t));
+    const isSelected = selectedSessions.has(s.id);
+    const isDisabled = !s.social && !isSelected && countByDay(s.day) >= MAX_PER_DAY;
+
+    const div = document.createElement('div');
+    div.className = `session-item${s.social?' social-event':''}${isSelected?' selected':''}${isSuggested&&!isSelected?' suggested':''}`;
+    if (!isDisabled) div.onclick = () => toggleSession(s.id);
+    if (isDisabled) div.style.cssText = 'opacity:0.4;cursor:not-allowed;';
+
+    div.innerHTML = `
+      <input type="checkbox" ${isSelected?'checked':''} ${isDisabled?'disabled':''} onclick="event.stopPropagation();${isDisabled?'':'toggleSession('+s.id+')'}">
+      <div class="session-info">
+        <div class="session-title">${s.exec ? '⭐ ' : ''}${s.title}</div>
+        <div class="session-meta">${s.time}${isSuggested&&!isSelected&&!isDisabled?' <span class="suggested-label">· Suggested</span>':''}${isDisabled?' <span class="suggested-label" style="color:var(--orange)">· Day full (6/6)</span>':''}</div>
+      </div>
+      <div class="session-day-badge">${s.dayFull}</div>`;
+    container.appendChild(div);
+  });
+}
+
+function toggleSession(id) {
+  const s = ALL_SESSIONS.find(s => s.id === id);
+  if (!s) return;
+  if (selectedSessions.has(id)) {
+    selectedSessions.delete(id);
+  } else {
+    if (!s.social && countByDay(s.day) >= MAX_PER_DAY) return;
+    selectedSessions.add(id);
+  }
+  renderSessions();
+  updatePreview();
+}
+
+// ── BILATERALS ────────────────────────────────────────────────────────────────
+function addBilat() {
+  bilatCount++;
+  const list = document.getElementById('bilatList');
+  const id = 'bilat-' + bilatCount;
+  const div = document.createElement('div');
+  div.className = 'bilat-card'; div.id = id;
+  const isMixedMode = document.getElementById('memberType').value === 'CMLD';
+  const attendeeDropdown = isMixedMode ? `
+    <div class="form-group">
+      <label>For attendee</label>
+      <select class="bilat-for" onchange="updatePreview()">
+        <option value="">(A)CM &amp; (A)LD</option>
+        <option value="CM">(A)CM only</option>
+        <option value="LD">(A)LD only</option>
+      </select>
+    </div>` : '';
+  div.innerHTML = `
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" class="bilat-name" placeholder="e.g. Roland Hunziker" oninput="updatePreview()">
+    </div>
+    <div class="form-group">
+      <label>Title / organisation</label>
+      <input type="text" class="bilat-role" placeholder="e.g. WBCSD Program Director" oninput="updatePreview()">
+    </div>
+    <div class="form-group">
+      <label>When</label>
+      <input type="text" class="bilat-time" placeholder="e.g. Tue 28 · 14:00" oninput="updatePreview()">
+    </div>
+    <div class="form-group">
+      <label>Room</label>
+      <input type="text" class="bilat-room" placeholder="e.g. Riviera" oninput="updatePreview()">
+    </div>
+    ${attendeeDropdown}
+    <button class="remove-btn" onclick="removeBilat('${id}')">✕</button>`;
+  list.appendChild(div);
+}
+
+function removeBilat(id) { document.getElementById(id)?.remove(); updatePreview(); }
+
+function getBilats() {
+  return [...document.querySelectorAll('.bilat-card')].map(card => ({
+    name: card.querySelector('.bilat-name')?.value || '',
+    role: card.querySelector('.bilat-role')?.value || '',
+    time: card.querySelector('.bilat-time')?.value || '',
+    room: card.querySelector('.bilat-room')?.value || '',
+    forGroup: card.querySelector('.bilat-for')?.value || ''
+  })).filter(b => b.name);
+}
+
+function getOthers() {
+  return (document.getElementById('othersConnect').value || '').split('\n').map(s => s.trim()).filter(Boolean);
+}
+
+function getMonEvents() {
+  return [...document.querySelectorAll('#mondayEventsGrid input:checked')].map(i => i.value);
+}
+
+// ── PREVIEW ───────────────────────────────────────────────────────────────────
+function updatePreview() { if (currentStep === 5) buildPreview(); }
+
+function buildPreview() {
+  const company = document.getElementById('company').value || '—';
+  const names = [...document.querySelectorAll('.att-name')].map(i => i.value).filter(Boolean);
+  document.getElementById('prev-name').textContent = company;
+  document.getElementById('prev-sub').textContent = names.join(' · ') || 'No attendees added';
+
+  const sesEl = document.getElementById('prev-sessions');
+  sesEl.innerHTML = '';
+  const sorted = [...selectedSessions].map(id => ALL_SESSIONS.find(s => s.id===id)).filter(Boolean).sort((a,b) => { const dayOrder = {Mon:0,Tue:1,Wed:2,Thu:3}; const dayDiff = dayOrder[a.day] - dayOrder[b.day]; if (dayDiff !== 0) return dayDiff; if (a.social !== b.social) return a.social ? 1 : -1; return a.time.localeCompare(b.time); });
+  sorted.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'preview-session' + (s.social?' social':'');
+    div.innerHTML = `<span class="day">${s.day}</span><span>${s.title}</span>`;
+    sesEl.appendChild(div);
+  });
+  if (!sorted.length) sesEl.innerHTML = '<div style="font-family:Arial,sans-serif;font-size:12px;color:var(--sand);">No sessions selected yet</div>';
+
+  const bilatEl = document.getElementById('prev-bilats');
+  const bilats = getBilats();
+  if (!bilats.length) { bilatEl.textContent = 'None added'; return; }
+  bilatEl.innerHTML = bilats.map(b =>
+    `<div style="padding:0.3rem 0;border-bottom:1px solid var(--pearl-dark);">
+      <strong>${b.name}</strong>${b.role?' · '+b.role:''}${b.room?' · Room: <em>'+b.room+'</em>':''}
+      ${b.time?'<span style="color:var(--orange);font-style:italic;margin-left:0.5rem;">'+b.time+'</span>':''}
+    </div>`).join('');
+}
+
+// ── PPTX GENERATION ───────────────────────────────────────────────────────────
+async function generatePPTX() {
+  const btn = document.querySelector('.btn-generate');
+  const msg = document.getElementById('generatingMsg');
+  btn.style.display = 'none'; msg.classList.add('show');
+  await new Promise(r => setTimeout(r, 300));
+
+  const company    = document.getElementById('company').value || 'Member Company';
+  const memberType = document.getElementById('memberType').value;
+  const isMixed    = memberType === 'CMLD';
+
+  const eduDay     = document.querySelector('input[name="eduDay"]:checked')?.value === 'yes';
+  const monEvents  = getMonEvents();
+  const isProspect = memberType === 'Prospect';
+  const isCM       = memberType === 'CM' || memberType === 'ACM' || isMixed;
+  const isLD       = memberType === 'LD' || memberType === 'ALD' || isMixed;
+
+  // Standard attendees (single type)
+  const attendees = [...document.querySelectorAll('.att-name')].map((el,i) => ({
+    name: el.value,
+    role: document.querySelectorAll('.att-role')[i]?.value || ''
+  })).filter(a => a.name);
+
+  // Mixed CM/LD attendees
+  const attendeesCM = [...document.querySelectorAll('.att-name-cm')].map((el,i) => ({
+    name: el.value,
+    role: document.querySelectorAll('.att-role-cm')[i]?.value || ''
+  })).filter(a => a.name);
+  const attendeesLD = [...document.querySelectorAll('.att-name-ld')].map((el,i) => ({
+    name: el.value,
+    role: document.querySelectorAll('.att-role-ld')[i]?.value || ''
+  })).filter(a => a.name);
+
+  const bilats  = getBilats();
+  const others  = getOthers();
+  const sessions = [...selectedSessions].map(id => ALL_SESSIONS.find(s=>s.id===id)).filter(Boolean).sort((a,b) => { const dayOrder = {Mon:0,Tue:1,Wed:2,Thu:3}; const dayDiff = dayOrder[a.day] - dayOrder[b.day]; if (dayDiff !== 0) return dayDiff; if (a.social !== b.social) return a.social ? 1 : -1; return a.time.localeCompare(b.time); });
+
+  const PEARL='F0EDE6', PEARL_DARK='E0DDD5', CHARCOAL='2A2825', ORANGE='F8781E',
+        OLIVE='61704B', SPRUCE='465C66', SAND='CAB6A5', SAGE='C3CBB6', WHITE='FFFFFF';
+  const SANS='Arial', SERIF='Times New Roman';
+  const W=13.3, H=7.5, PAD=0.32;
+
+  const pres = new PptxGenJS();
+  pres.layout = 'LAYOUT_WIDE';
+
+  const wbcsdLogoB64 = 'iVBORw0KGgoAAAANSUhEUgAAAJwAAABeCAIAAABZ+uqlAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAA8sUlEQVR42u29Z5Rc13UuuPcJN1bu3I1uZHQjAyQSAwgSJCgRDJJsSZZsJcvyG8n2ezPzbI9n+f1wesu2ZHtky8/2jK1oWZIVKFKiKYpiJgGQyETOjdS5u3LVTSfNjwIgkKJsUiJsScZed9WqvlV1+577nX32Pnvv8x2sFMfguvxHin6D3ydvwjeuy0+dsOuP4D9ayE/BFa/Lz2A3uS7XQb0u10G9LtdBvQ7qz1bDCMFXijFGa/2Tdp9KKa11626VUohIKf0x7/NndkojpUTE1ntjTAtmQkjr/U+OWJaltTbGGGMIIUqp1kkp5XVQXy1XK2gLSES88tR+kjTVKKWllJxz23aklEIIrQHxhw2i+j8vqISQV703xvykIXpFWSmlV48ojLEf51Z/Zm1qy4K2Hs0Vlf1xxrRrZ1NbQCqlgiAQQlyxGteH339tEL6itT/+87oW0mw2GWO2bV/xkoIg4JxfB/U14GxhqbWO47ilDZTSnzRHyfO8er3uui5jbGRkJAzDQqHguu5PuKbqq4Z6cvmMBrx83pBXfgq69ZG5YhX1a13qVW/0Va8tC4oEmTEYizgMlFKKc+64lHEgRv+A3SH/VhP0VXcor/rJD7gtl26eff9T1GDI5Z/rV/xTgyKRhBDb5mNjY9/+1qOjo+O33377bbfdqo0AADAIAIDmDWXo3rBN1ag1ao2g8eoG6x94xJeestECUWgjKEUgVGpjCGrUGkWQVAk3hkokOo5jho5WVAMaAAPEIGpADXgZJGVAaSMJBWMUIQQIm5iaBoNgEA1B0N8/DCHImw0lle3Ynb/3+3/xgQ//ty9+5dFaYACpRi2NNkgJs6JEJlITxg1YSjNlCOWO1CaRyiABQpWBII6oRYGC7aYMkmbUNFQLZQizkGGsIsKJNBI5KEwMJEgkIWCMUjph3AAKpSOlFF7uFpQiotEKCbGUQkpYvVHOZFJBUzVqhoCvFbsE56s04fVBS35UtYNX9MRXqcv3zwChYAAIIRrBGATDwFAEWyTQ3tabxCZoxogklUoFQYMxZtAYvNyiVpMMAnw/knDZjzVxnDSb4Ss1xgC0OrVWyvjpjAF28tTw+YuTQtCTZ0ZOnDwbRxKRuq7bbDabzSCXy9u2F0eq9b+0IlGYIHDX9RFpFCUW91J+Po5MGIh6LY5CXSh0gqGMuvVaZFkOGJQSPC/TqIe27TLGtIIkkZy7tuUliQRDOHcs7oOxjGZgaLMZCmF8Lx9H2uK+IVQpBUA48xnxtaIi0a9z9vLmaCox3z9+qD0zgJdfo1hy7jBqN+pR0Iy45QF4tZqaGI9npjQlbcb4jpuPREK4RpIASjTQOlr/7tKlDEFDwBAwzCDXgFJAGMQAGtAY1Ab1q7xKKWWSJE8//bTjOHdsvr3RqJ0/dzGVzgsJUSy4bfupjDa8XA4cNw0EwzhSRlNucctLhEmE8vy0kFipJJlMTzrdrbWVJCQIIEksKR1CUlIy28lK4TQbBMAjxI9iiiRFaFoqu97QBnwDfhxbcWIp7SaCK+0AutrYGrgBpxkKQlzKXWVIlIhESUOQO7ZGo1H/+9hU8krrdbVR1K/uK6jBkHQqK7QRieKWm0m3R6Ha+eLeffsPPf/stq1bt/78O9+eSnVXymVAk8m5tVqFUfv700vzylYZYoxuTTsROKX0+2qKGsBctl5gEBzfiSKVSPX0c8+uWL7qgQce+Ku//uuzZ8+eOX2ht7fAGGWMN5vxzpe2Hz1ycuNtt7z40vPHjh0pl6u9PbPuu+9tGzasS6edmZmS7xY+/9mvDA4Oaq0PHz58+MhBA8ktN2+6e8v9Q0MD5dqk1nLni0cunB/Z8pbbOLcJWoy608XGoYNHTp85fv/99xba8pxZSUTPnL3w7LNPbdv+jJDNxYsXr1u7cdXqtf/0T/9466YNq1Yt8P00ZRZAK5wpgeqrbPkbU7837Ci9oTmBQag1IsIYZy41bHq69PTTO770xYeHz45zdD776YeGh6c++rEP9vTmw3hqama8p7ujXouIudRR8JXebAtXrYxBQilDYpAwjZfHfwRiLv1GAwRBYIx18uTJ4eHhX/7Qr/T3982ZOzA1PnHk8MmFC7YKWQuCQEk2fGb0G19/5NSp4URW2ttzrpM+fvzU1OQXJyeK7/j5t+ZyuUZN7Ny59+CBE1Im6Yw3f/788fGxbz38LzNT0Qc+8Ivds2xKnZPHz7/44s4NN63t6CgYSrShidBnhs8/+dTzW++9X2uGyLZt3/mZz3wujpsrVw9lc87o6OjXvvG1AwePfvfxJ3sHZq9YuRiQK00AKWCrb+pL49Xlnt0augxeC+/XEMCrPCNDrvL69OUzVxQIbNtz3PTMdPnoscOVcv3QkZMjo0VK04x69Ubw1NM7yuXp//7b/2XBwg6NZmpm2rf8q8aD73teiAQRQQutURkkCMag1q+yAUQjgCEGiDYQRtFjjz3W1dW1bMVyxthNN9304Ne+PjlRDpoCiNIaUn7O97JhID039xsf+cjceX0iwce/+/Rzz+56ef+RW25d09GZLxRyxeK0bcUf/OD733LPbZ5nT03N/Msjjz3+2LZt81/4xfffzblFKffcDCJyiwohpUps20qlUkIIz0sh0tGR8a997Ru5XO7dv/DLN65ZZjvALfrkE8995SsPMctzvSxhdpSoWEogiJQQgj/cVuo336ZewRbgygO9MgyCATBIDFAD1CBoIJRZBw8e/5u/+cxffervDx05xZjPuAfElhq9VFqoZO/L+7/7vacOHToRRdq2PDAEDbScWHLVoY0E1IQQJACojVGvnnEa1NBysQgY6nvZ6any/n0v3/PWewuFAgBZOG9+Nps/dvT0gQPHueWks5laPajVI8fNvuvd723v7FBGO567bsNN8+YvGp+YrjXqhOFMeTqVdVauXrFk2WLumDCp9vZ3DC1dNHfBwNjExUjUZspj9WbNoI6SptSh5RJlkjBuRCJIZFRvVoCofQf2FMtTb926Zctbbi20Z2vNolDB6huXb733LdVao96Mo1gRyh3XR0qllEIlLS+hNdH4dwgTkkvKilcrK14eGQhccnEZGAqASawPHz25c/fBWj1pa+8hzG4ESTqdvvPuOzffvYlxI3Xyuc9+odYQSUwJugD0NaeJSgljFKIhBFqvhMDlHk2uOpgBCkAmp6cPHjw8U65s2nSHTJRl0UIuv3zp8iCITp8+I4QiyJQyKT9DkObz+Uwmo7VMkiibzaZT+TgWWps4jj3PieOwrS2fzWYoBUJlHAeplAeg6o0KZZDNptPplDGGW5QQImXCGOGcW5aVy+W01oTC7t07Ozs7BgcXFYvVWr3c19fDOHq+tfKGldls1rZdINQQaoyJRaK19jzvlfqjrzJ916BEtJX2I4S4ri0SBYYqTQywltZoDVITZvlCkSCShHJmWWfOnKtXRW/3XM/NRFFCCEFq0jn7o7/+gbe9827mGCD0iSdeuHixipCNE7RsT2kglGsAoRThTIEhBI3R2ggAjQjaSK0VoNYaKOFKIiGMcVdpBMMIWtNT5SOHj2b8TLVUPnLw0J5d+44dORI1m41GcPr0cBTFSinLshqNhuu6rUCxMYZSKoSglLquK4RoBaQsy9JacYsaYxhjra8RQqSUlmVFUSSlNMYYjQCASJNEGoNamSiKWl8Ow9BxHMuybNumlDYajSRJfN8nhHie1xpyKKWtW+KcJ0lyZW727+H9IhJKaRw3tZa27WtDQRPOLKHiIIqymZyIycv7j+3dvyeXs9+69S3IdKMeSUXSqQK3HWMMEEMoWLbp6MKP/dqHjh3fd+ro2JHDp2+9ubZovu24uVJlJpfLR81Aa+06DoCilColATUYuBSQAI2g0GjGGCGISJQ0UiTGIDIaRXEciyeffFoK+NM//dN6o0oISJlw7sYh8Xyyb9++G29cxVgmnXHrjQqARjSMsdZUOIobYdgEMJZlSYFSagAMgziddV3PUxLDMHRdNxGNRj3MZApaG0RKKQdgYMDidhwVEblWmMnklMS2to6RCzPNZgBAEBjngBLrtbBSro2Pj0uZGCVlHDmOBdo0GjVENK9t8q5N6k1IbdlMGJRauLYVN5RWBIi2HJdpU6uHzz+7+6EHHx+fHLvlllX3vc2JElUslaUw7e3dqVRKa0moNkZUa0XKAIm8Z+vd5anvjI5Ml8pBrSHSKeY4hXpdeG7W85zpyVHXs6IocuwrgTdCTMsz1IAalDYGGLaCG2BzG4k1VS0fPHgwnU7/4e//ESKm074BWa9Xc7nC00/uOHX65LEjR265eX3YjAlq2wLPZWAUGK2VsDjlDC1OGKFKaIYeau45PqecgqOFBoOMWNVyPZvzbJZWCWbThUY1KE7V589jtuMkiYwjc+L4aWNotdLIpPPLlq48cujhvXsO9PT0dHSmS+WJdDotkmjvrpdz2bTFdDrlaJ3UqhVGIJvNKikpRQBCDHlDmdQfcfhVSmkNts0RUUpJmO36GUAexcK2naAZHzh47PDh01IwA1woDIOkXK4KYQr5dj/ltUKaUsp8ri0MAACWLFkmhQFDh89cSBKs1pJnX9j98Y9/6nOf+8qFC1N+qp1QlzEHgF7lVwMBDaCJAa2E0ZogckIRDWUYJ+HY2MiuXS+tXLXspptvXLpscHBo3tw5vevWrVo8NO+erXfZDh44cKBUKiFRUVyPk0YU15USiGiMMkZJFRhIhIyVMlqDlDKKAqkEY1wkJkkSzlk2m6aUak2iUK5fvz4Im0899czpU+cajaBUrO7cuWf37r3ZbNZ1XW3Upk2bCoXCzp07X3zxxWq1QYldLtVfeP6lhx96JA7rzWZZy5AR47t2FISlYrGVgXi1Y/G6YxFvWFMpt6Mksj1QYEScpNNttUpy4cK5TJ5k85mZYrVai5C6BpxyNTCaVSq1Zj0ghOTyGcextJYAJo7F4UMnLpyfWbio3bHT7W09p0/ucx2rWCyWy+XPfOarZ06dTmfcel187GMf1ko4bk6KugENYK74C8QAgKaUIIIxrYoQLUTcbAbVaqVambl908YkDjgzWkdgYpnEQSJzOWfJksEXto3u37/3pg0bLRsyOW4gMaAYs5QEqWJCRSbrAGjGWBJFXd1tzFJRXDOmnVDQSiBJSpXx9vY2AE0oWb5i4M67Nm7b/tT/+B87C4VcvR5k052rViw/eGivSELPbUdj/cqH3//FL37pb//mUw899BU/ZU2MT7lO7m0P3P/44492tqfjuEZJasnihS/vefmb33jQccydW9ZdNb/QgFdmb/+2HtL/+3d+8w1NUhl34zjgtkZEqZgS/FsPf/fBbz7U1ZPv6OoaHh574fk9IxeKSkM257/t7fccOXzi+ed2UOJt3rw5324fPLT/7PCEEnR8fPrw4SMd7W27d718/MgFRJrN8aElC/cfOPbMMy8B4Ubj2bPnC/nCwoULlJQEAQkaoxGJMZeMaKVc6u5sR1BaCUCNiIAEARMRL1w4eNNNG1zXNiBBx36KG51ksmnb8To6Ozq72jKZdFd3h+fZPT2dy1cstiyutVJacc4Yp909nQsXLnRdT2tgnCxfPtjb18k5Q9SWo5VO+vsHFi6cN2deb5LEcWxWrlrW09thOyyXT2+8deOWLW/ZvPn2hYP9i4bmVGszmazX2dm1Zs3qefMHmkENUa9dt+aB+3/uzjvvtB1cs3Z5Ie9aFuvrnj9n9ty58wYGhxZkcw4AIFw2Oi0je8nU4pusqS13zoAklDLG6pXmv3znsT17dq1ZP7j+5pvCMK7VA9tJMe7EQisJFy5cBEPy+Xwm4zGGBiQaUJJY3D9y8Owf/sGfua47NRIonVg2KZenp2eqSvN6PUinvKDZeOjhxzfecqvlAFrsqhvWV5kDQSkCaEIIICqQrmvNnzewYN58x3HQKEqV0UokcRI14zigNJXynTs23Y5oCIUlixcuXDBba00Rk0QAgO05K1csWbpkiBBitLI4fetbb7MdwhiLo0jKxKbQ0eENzLphcnKqWpns7Z1VKYeplL9p09qNG2+knMWxsFg6jJq3brzRsoHbNIxnPKfN9eHmW1ff/dZbpErAMEbSQRD9/M/fjyQmGITNKgP7pvWrpVpRb8wQc3m8NXgZRPM6A3pv0KaiUUoQQpSAJNEtz75WjQrtvZTbBOnoaHFmuqYR4iSo1+tSwPR0E5Cl0tz1kTJzyS4aImViM16ZqU+PlwghCLq7p63RrE5PTygj+wd62tpyXV0dBw8e2r5jH0EXDL4i/WQQAAwQrQghjDJCqAEUSdSUKvH9tON4QiillAGtQUVR1NbZRijYDrOYJiANqDgOG40GIdSyLEDNLWrbThzHQgacShlHFiNGhbmMH9RrIgo5BQJCJoGBpFGfGZjdZdm0Ui1KGTeDsuUYILEUgW0RQmTKdxC0VrHRCaNQrxcLed/iEIZVhFjKRhxXGVWcIGhhQNg2cz2r0aw3mqVCWwpAgyFXRQXNtQs+aDChZVMlGQUXES2L2TyTRJQxNl0sNes6idBzGCVJ0KgiwsXzpVoj7p2T4n7TqMRI0AlkUl5Pd7arywejCKBWSXshNWeg1/d4s1nkPB4c6v77z/zZx379Q1KKQwdOTU82KANtwkSH1KKGmFgmQJhBDjSVCKoBpI40hLaDFFAlSiuqFUdqA+FACeW80UwYd4xO4rjOGRopZCzbch1GWComnBoCUieEocWIkrJBiVEytm2MgqZFMzJmSkjbYgQ4asIoFKcnHG4xpMRQm3GlIwMRwcS1uEVJUG9Y1PGdrEqAIXO4I+LI5pRTk8RViwvHAtSxSCLHshklRidC1ilPqC0iWdVEEc6UQmOQcSJVRABBm2sDKmhiNAJrDfdICUFOkAdhXCqVGvU4my3MmtUNIBHRaJgpNkWCuVzK8VBKRdCilHMLN2268eN/9nsbb1nT0Zbj1Gzdes+yZSuEkM1m3U85Xd2Fnu7cbbet23DTmhd37KxVm1prQhERtW4laihSojUAoEFivp+xN60+jkgt7hCkRmOjHjHLiRKpFSil2tsLSRIxxtraOqYmS76XVQriOFZKGYNgCKPIONqc2ownUVPEoU3dQqbds504jpJYeo7vum46nY5jkcTaddKU2qVSyXEsx3GmpyaDZjPlpUDRsYsTvpuyuYsGCJA4jJIo4owaJUUSW5blcCsKgjiOkYA2AlBwywAqREyShDPbGBRCEEI456+zcO5HiShdXZ+HiIwTRNQaSsVKpVJpb29ftGiRlDJJZLEoilNlLUxPx0DaKYjEABBAybhCHs+e3/Enf/57nX1Z7vCJqWIUcYvlLZ5maBWyhTiOXdd++wNb6/XihYtnoygCgwS51sRopJQTaFWytyIvCJdqJFAjaNRB0EiSBIBFkXTdlNEUkaZSGQDSbMRag1KmOFN2/UwQJZbjIbUdL0O5FcRJFAskVGpohAG1qJd2DVUzlZlqo+q6ruu6jWYYxbJUqnLm+OnCdLEmJOvqGGjUYwTq+SlC+Y4Xd37yr/6yEYRKw0yxLKQJwthy3Fy+nTJbG4qECqHCMGTUSvlpSpgQwrIsxlipVCFIk1gTzpBSAECgWpuri37e5IC+1vpyBYJGRMYYIQQAZ2bKxWIxnU4NDAwQQrQ2589daDbriNDW1ub7aa1Ba6lUTJm2He2lTCpHPvjhX+jszh4+emhkZHxyshrUYgCWzeQIIBq5fsMN3ILTZ45Xq1VjkBLbaAKACPQVdR6GXI42X0rljo2NfOnLX3zfL33gVz780TOnLypJHNubnJn2/GwYJwYQCLMc/4UXtn/kI7/6W7/9O//8la+fOH6aUp5OZRiztSKIzHHcOI5jERECnu9zzsM4ioWwLBsMyea6EolasXSqfeTidKUcEnTiWAkhzp29+OSTTz/55FNf/vKXKbEymZzrpC3uxZGs15tKIkEbgCFhfiarwARBog2llNcaTSFUT3evUohItAatgVELgMSxcGzvWtX9aq2N0a1ABKJhjAJAEsPUZKVUqjiO097e7vs+JfapU6eUDlwfUmnbsgmAVloonRCqEt2UEM5URm+940ZqiWJ14ujxw8YYpbCQaXMsl3NmO8R2gFuqODPeqFWMRE4sCpwYhhpBGQoIKAFbXZiCsa5UfC1ctGD9+vXGkOEzFw8fPj0yOqU0+l66UW/mc+2O49VqjQsXxj7113975Ojxrffd/46fe/f8BUNxosM4sd00t71EmDBKHNc1BKMkDuIICFqOS5iVSFCGGqBCkiCQL764/w//8BPPP78rirXluF4609Xbd8vGTRtuvvWd735Ppd6QGqv1wHZTluNpoJR7QpFGUzBqNxoNShkYqjX6Xsp13ShKGs1YKsgXOrXCOBZaA2NcScO5fS1AJVcKyVtvCCGME0KIFKY4U0mSJJNJ+SnP9/04FgcPHlQmyBcc12OtsRoMIYQpCbaVCgOVzbZVyrW+gb58ITd8/tzI+FgmnTMGjTFKi3qjiBiuWbPszPCxJEmMhlb+BxG1kUpJQgBQXSrvMwwMB0MBAFCFYb2jo41RC4Hv3XMQwVbKJFJqJLVGEMaiGURPPf1cM0hyhba5c+YB8kQYISQYJhJdnKk3wzjf1oGMGyBALMt2CbMTYeJIKY3aEGOobXlRqA4dPDY1WerrnVPId0ZJnAhlW96dd2353d/93d5Zfblse5JgNts2U6xGUWLZbtAUhLqFQmcQJ9yyAFEbLhVTgIQwAySORRgIMLxcrhoNQqiWskZR/HogYz+CTW0Nv4hwyaYygohRKCvlBiGkq7vD8xzXdUcuTh4/flzJoKdndsp3lZBaIRhOwA+b7NjhyWqJEHTa2rwkoROTU32z+vMFoRFqtRpjzLKI1sLzvK33bf7CZy9YHCkhWrYWEhkDBoxC0ACtQP/l8jskABJAc8sSQnR298wUG4cPnYgjaYC1cmqgEsqtUql84fyYbXnd3V2W6ylD2vLZWkkfOLD36LGd58+f9b3C0qVLbr1tNbctzuxypXbs2P6Dh/fXqw3b9dbcuG7dupvOnhvZv+/onn37pTZPPfPswaO7unvyc+csrBbl4aPHgmbpVz/6y7V688LFse0v7MzmcvPm9TaC2rbnt9fqwaaNd958802ptlS5Mul5Kc7Y0SPHDxx6eXJqrFEPV6/aYPHj5WLl3vu2ENRKGUKoVoAMrgmoiBSIaZlVQoEQIBTqtahcrgHoXC7luMxxLSl1pVIzBguFguv6SrXSWxQMDxp690unfuc3P37vA28dGhocH63aVqZYqg30U89zPM9BYoKwmfbtMKqsXL7wVz7yAdu2KKVKCmMMZ9po3UqvXhURJQAAppXDASmTmdL0kiVLlGAHDx4cn5jJFtz2jrySxnX8Y8eP7Ny1547NW7731LaVN6ymhGcz+ePHLjz53Wcnp0bXr1+2cuXqp57Y9slPfqq3/4+WL185drH84IMPRUl548ablVJPPvn0pz/9Oa3o4sVLBwYGSqWZ9vZCf39fX38hnbEqlcojj7zw/PMvrFy90BhTbzY/97kv7Nl96I47Ng2fOxYETTD02NHTZ4cnfC+9bv3STK6gFf3eE09s2/7cypVLt26999zZkW8//NTMdJkzvPe+LZzzJIkIcsdxYhm++aAag8ZoxngYNh3XF0LajkUpHRubmpmuZHO5ru4CIYYQ9H1fSWTU7eqYzahrcddonUShMWg0p9Q/faL0iT/+NGXIGEP0GKYs7mez2TOnD1cqFd/3w6hIGaCGFSuWIKjLMUIpVcIY01q27DrnjKKlFLYWegJRSqkwjmdmZtra2tasW7t3/76TJ88sXb5ASUBk9Xpjplim9FId6Lx585CSMFLPPrf9yPFjd225/eZbNiAxk+O1xx57/ML5iTlzlz70re+Ojs+84+fuWbJ0gW3bF0cnjh45UalUMpnMkiVD9Xp19Q3Lb914Uy5vU6YYTTWq/PTps93d3VrrQr79Xe98z4ljF+v15j0bb1+z9gbPzT380KOf/9wXT50ZvmXjDQbY7j0Hv/ylB3/pfT+/es0Kx7H6+haUiurT//D51auXEEK0lpRyAHKtpjRXq6wxBsAQogFgfGyqXguy2bSfcgClZbFWxpig1dXV69ieASlVE2mENDAYhc2GSKTvZlJ+TsRJvV4nQAu5vM3RslixWIyjxHF9SqnlWp7ncc4JIYwRblFAobVAYrTWrcUnSZIIIbTWWmtjkBAWBnEURf2zZy1duth13bNnz45PzihDfS91+vTpI0cObdiwYXxyOgqTtvZ2y7JOnhz+3veeXLBgwdq1a6XUtWrj/PkL2kD/rHkXL0xse2HXvLlDswcW+F7+3LmRM2fO+r6fy+W0lsXiNKEwd+5szhFQcs6FEI16pCR2dnZyzjm3K5UaIl2/7qYNGzY4jhNHie+ls9lskiSMsXq98ZUvP9jTM6evv7+joyOdzmptMulCOp3r6emhnF6qZX/dC7zIj6CpAFeW7moAzThBhNHR8Xq92d3d2dWdd1yazfmXpz2qq6uDW0CZNKSKvER50fIqXX3UsptRNNEMJrSq5fP2nIHO3p42x6WJCKuVOiGW1thsRGEgStWa1CaRIpExEK1BaBSUMSDIqYUGtVGEAL1U+k7A0Hq9OTk52dfXMzg0P9+ePT08XKsGvu+ePXthYmJi1qxZs2f3j46OU8pmzxlgjO3f93KzEfT29mYymcnJya997Rvbtm376Ed/bfHQsl07X56eqtx4w4Z8vu3o0WOPfPvRixdH3/ve965du5Zzfur0yUajVijkpYopxTiJGo1my+4MDAwIEQuhzpw5y5nd2dnl+Y7WKoqSWq2OiD09XUEUjoyOHzlyavHQinQqW282gyhCyoXQYEhvb6/SQhtljEIK/1qx9Y9V92sQgRiNV1ZlWxZFNJzZiCZfyKTSbqVas2wahk2juetiW3vGdiihsefTlasXLFmyZPHgjbN6F37jwW9te35bpVZpmrplke6e9MpViyrV8Xq9Ojo6Xq0EbW12LtethWVxo2UExiit+OWyHcYsrYhWYAxSipQQRJTSaAOAxHG8Sq2azni2hwOz+3bv3lMsloozweGjR4wxt226dXx8fGpyJpXKFHJ5zumZM2cByO7du8+eO6GlGBwc3LL5noWDi7TWhw4d9jzvO49+99HvNPJt3pw5c9/+jgfymTRjLE7CkZGRbDbb29fteZ5lWUImSRI0m6HF7d7ebiGEY6emJmdyuRznPAianFNCaLFY1lrPnj2bUrp37/4kNm2F7nx7h+tCGMYiSYozVa2hp6dbKWGIZERTRozU13DRccvvNcYAastmSIzjeFpL17VtB3losjnXsjmjdi7HHc9IFXOEhQvnz5071yJ+Id/TqIn/4//80P333fzQtx88dGD/0uUrt2xZ29Ob7ujMdnR3RLE6eeLsihUDrseOHz49NDRkQDsuS0QAVGOrIlYRKY1SYAwCMdoIo6XWCECQUIIsiiIDcRiZVauXHDx86OLI2P79L4tEdnV1ZDKZM6dGJsfHs9ms69oWp0ZpNNDf1/Oud72DcYqIvpOWUjJGJibG8/nsmrU3LBzs7e7J25whGstitVoNAc6fPWdzy3dTjuWEQcN27Wq1OjU5TSnN5XKtpzQ5Oel5XjqdsixmQNXrzUqlwjnzfdcgDp+7KDXhtk+QSRnFcVyaCWdKFc9LzZo1i1IkBDUYraWUCWPsmoCKiPoKqAAt8xnHSS6XzWRTjsMJNZSCELHR0DdrFufcsX2tEkaymZxnBCsVG66T4tQsWTp/7vz/LQobSKhrZ5QI/JSzaNGik0fP7t9/fN36laDlV778zYULF27efPPA7K5WHQJSo5UxhgI6SCwCqEEoJRApMs7A0oZESZLJZJjNhUiWr1ya+Vbq4MHDtUp93drFS5Yslknc0dk2OjraP2tOvpBVSoZhaFlWT0+P7/uUEde1w4YIw4blWJZNjh0+7rpWX1+vZQMBlSTJ9HSZEGJxPjY2blmO5/qO40VxLIUqFSuVSq2traNQKLgea9STixcv3rB6vWVZSgut5eTkeLE4nS9k+2b1JkmSyeTiWEpp4jjxLUylUjNTzcnJKS+VzufzSESLhOT1l7P8KN4vIhojCbkEKucc0YAhPT09hUIOUCdJ5KfcOXMG8rnO97//Xbls+/RkcPz4iSOHjzUaUdrNeV6qu7Nj9tzO3lkZ16eZtA9IQSEQ7O/vmz13zpPfe3H3rpff+c578/nMsWNn9+w+MKuvq709R7kGpSgFrcAYwpiNwCk1xiRGS4KEMhZHulZvTIxPtbW1EaIti/T2deZymXPDF/t6ZvX29OTz+ZnSyOT4RL1ez2QyWmut5ZIlSw4dOnLs2JGhxfPz2ZxMp08cO/Xizh33v+2e22/fePH8Qy8f2NfXl1mwsH96evr8+bNjo6MrVqxI+RkhRFu+nRFeKVXTOVfqMIoiIURbW1sURZSzZjNpNBpz5851XAtAc06DIGg2m7m8TykmiRwaGqLs+V279/bMpkNLZsWxuDBycXp6OpfLOY4DIFp1+kgMY+RagKpb1fJgAIEao9G0Ar+GUtXekUmlPADIZrO33HLTovlrVi5fd/zE8b/5m89v3769UqkQZDJRiAwMAS1zebe3L7v6hiWbbt8wf/58xhhoyHfkFiyc3dGZPz18/v/7f780e2DW1GTdGDk9UzMGOecGBALXWhupALSUCaIyYIwBRASl6/VgYmJ6x/btftqbmZrK5TLZjD93bk8cJndu3rBkyWC5VLpwfuzxx59g1CSiOTUx2t3dfustNx4/tv/b33742NFDK1euqlQqjNC77r6rs7Nz08ZbXnjmpW9+40vHj++YM3dWpVhv7yjccstNc+b0l8uVIGjWY7V79+5ElVatXjwwpy9o1ovFUSkb+/ft6ejMGW1J2UylmOcy22JSyqBZCYOqlNUdO7bNXzR/aGho2fKFzzz7PYkXl52YH4bhoQMnlYhyGde2uQFqgBjzBpZLv8FyFtBAjeNZtVqDMZsRnxJn//7Dx4+eSOLmuvWrl68YymUznDHPcyYmzv3pxz/x5S9/59jRkWqtCcTYLvM8ns37swa6LcednJ5pNtTuPUe+970dE5N1ylJtne3c0XHcmJmuHDl88vzw9EsvHUhidB37LW+5Y+78XkoFgEJNKFiMOJMTo909OSRKKW0MsS1fSjh1enjXzp0iSQBMs1lfsGAOp2BbsHbd0sHBgSQOwjDe+eKe0kx90cLBtvb0+PjwokWzu3uy/QNdrus0qkG5VJ0/b8E7fu7+wcEFjDHHtuYv6E+l2fj42Wq1suaGdfffd//Q0DzLxiRpzJ8//9zZ0QsXz9+4ZtmiRXNTKb9cKtbrJc7l/PmzVq1aUa1UANRtmzZksy5nVCudxFGlMs2Y6entWr5sRaGtsHDhnEajePbs6dJ0cc0NazPpzPlzp5ctXbBq1RI0WitlcyeOIsaYeR3FD/gGSZx1I6qn0mmtKIKF4AVN8YV//PJzz27jzP3gh96/8faNlIKQQSrtnDt/5p+/8sgj394Th0SquKc3f/db7njb27cOzMqWqmHYaE5OTh86eOzBBx+eHJuxHNfm9uYtt7z1gQ2zZvXu33vmT/7n/2pWTCqVS+K6bYk/+fj/dePahYQGSCQFohUzyjp69OiioX7b5pRyKTUYSilXBoUQcSx835UyYRyM0YkImEWjKOls65meqti2z6jNuV2plBhXlo1SBQAEjI1gg2nNiYFQlFIyxoQIo7hBGbiOr4QdBIGfJvVGKZNJgbHrFZrJZA02grDsWg6l3BgTx7HWrbJk0iKGSaVSUkqtNee8Xq9LKTu6emrNOIyFZTmUUpUozvnk+OR3v/vYU09+7yMf+fBdmzeFUZ0Q4BbRUgBq8+YXnoGxXVtJiYBSKGMoIstn21avvGHT7Zvr9cYL23YcOXJsbGKyXK63t/fcccedS4aWREFzfGysXm00ahGnVmdHRy5v+SnZ0+cvHOy65547eru6LlwYqxfF4cMnz58/m8kUhhasSCJ14sTJIKjajr7xxsHb71jT1u5pExACFKnRxGhSLBb7B3qNUVobAGwtSDUAjmM7jqOU0Frbtt1KPTiO79hOtVq2bGrZ2AiKjBvP565nN4Oa5zlKCwBJmSJUJaIRhDXOUelY65hzwi1UOlY6oZRwCxk3SKTSoTYKkSod265izEihpBCEoOPYlBIphTHati0hEkIwSeIgaAIY13U4Z0EUMm7v3bfv8e881tvTm8tlEWF8bHzHjm25XOa++7Y6NpMqtm2ujSaI5lLm+M0GFUEbBMYsYwgljDHbc/2TJ0/9wz989plnntu2/aV9ew/s2LHzqSef27//4IULI6tWL95y121tbfmLFy5OTUwdeHn/iZNH29vT8+Z2ad3gTPuetXjx0nlz5xWLlWa9MTYx9fKBwxbz77vv/jgOTp445Hvml97/9sHFs7wUUTImBAgyMFRJKJfLPb0dSRJpbThnjuMQQoSScRK1Eg+EEKW0FJogA6DNZmhZNJ12w6jm+7ZUsZSi2QjSqUytVk/5HhINKG2H2Q6zLDsMI8aolBKRESRKx63yYACTJIJQpJRwzo2mlJJmUCEEXdsnhLa6FyHEdV1CSCtyhIi2bTuOc7l8WkulR0bH/uL/+eRzzz7T3t7uee7Zs8P/8i/fDoLmfffes2z50kajwjmzbUtpIWVCKTXXAtQkiVzHAaONRgTCuRXFyV/+5adOnjpdKdcYt/v758ydu8i2UqfPjOzds+vCxSOdne6dm29bs2YlYzAxPjJ8+uTOl3acO3t20YLBdCqDgFqLgdld69YtGxs/Pzw8EQWmVq3NmTuw9Z7Nd9190/0PbF69ZpHnA2VayYRSioa0QK1UKrl8+go/nTEaCeEWtyxLCEEJa3U+Qphj+4DcGOSMKBXHcZNxbNTrlm2n/FzQFJy5lLJavWw7VKq4ODNjWz5nNqUWgg3GBUMZI5ZlEbSVBE59YwgiBs1IJNjR2dlshp6XbjbqnDPL4tpopVsenJZScM6CMEhE0jpDKGGcIcF8vnDDDTcao0+dOrl3z+4LF85v2LD+rrs2Dw0NMkakSCyLSiUoJUIklFK4FjaVUdRaRZGwbF8KQ9Bx/czf/t2nH/vOUxMTpYWDy979rl9cv2FtGJqTp4dFUhla0tXZnnVsXwpSqzX37tn/2GOPHzyw37ZpLp/+wAd/cfPmTULGjmOFYbB397G//l9fKxbDYmn09ts3/M3f/UG1XqMkQpLYFmqTaKkotUEiQTuO1fDw8OIlCyhFpVSSJC0bBpRoBZxbAEQKKJdqQZAYjV4qNXt2T70+Q7lUKiYUfd+fnipp6Y6PzWQyua6uNmYlQOIwqhK0cpmeUrFeKlXCQIL2Ozracm0sjKpS6Fy2o14Ps9n06eFDrmvHkUGk7e3tWkvPIVKJVlC6FbZsRaQZY601WFf+RMQwThi3o0S4jl+v13PZbBzHtWqjs6tdSyVE7DmWlEkYNVIpT8iYEGI0fdNBBUpAJcIY43iZROhGI/BSuYmJ0te/9vCzz+0YHS92d/WtWr12/rxFM+XK1PhUrVKuVIuOy3p7u5YsHVq/fr1W8OK2l770T18LAxGG4ZYtd77vA78wq7/r8JF9D33zWy9sO+DYHuVycFHvJ/78921Xuw7GSYOgUUoR5IQwlRjOrChKhodPDy0ebEWYAYAxQikVWgkhfC978uSZZ5/Z9uwz26enKp6XGlq8fOvWu9euX0GZVkppLc+dG37ooUcqpVBJUpyprV235v4H7iq0u4SKbDZ74OXjj3/3qV27djfr2qjU2rVr3/WeLQsW9gshKXFr1Xjfvj2PP/EwYwiA4+OTH/zAL9+0YZ1tSW3iK4lnpRRjzHGcWq1m2zbnvHWyNT/RQLhtU8Kl1K0hWmvtu6lqtUwpVVpkU34YBVpLzileGoyuAagglW3bxph6remmUrbjNRoBUhvAevrp53btOrBrz4GLF8ZtxwdgUihCGKUoRaQgsThJpdMb1t289Z63Z9Jt//yVB3e8sCNKklzGt30aNMu1Zs2iVrk8vXjpvHe/5763veMuQkUcNRijRmut0OIeAMo4sSwrjuMzw6eHhoYuLzU3WmttJBBCKT9z5uz2bS8FTb1yxRrbSn3tq9/c//KhOzbf9u5fuH9g9iwl8dChQ1//+leXLVv2nvf8khTkc5/58pNPPn3f/Xf9wnvf5qfJsWOHnntue8rPLlu2bHqy8e2Hnj958vj979j4nve+PZ3OlYr1xx59dt++Pb/2Gx9asnRhsVj6i7/4ZLlU/8AHf3HD2mWU6StVea0VR0II13WTJGkRS1qW1RpXXNfVQCanpwuFgm251WrVsizOWJIktm0nScQIChGnUl6j0WCcUEqVfPNtKlDgWoPRwDk3AEIKQqC17Lm/v2/FymU3rr1h/oK5mYyTTrmFDn/Boq5FS2etXbdi/qK5nudWao1jR4/t2rUrk0t99Nfe09HVOTJ+Tsh4ZGw0CkUqlZo1q+2erbe9730/d/Mtqx0HpQxAGwRE4Iw6oAgxvEUVIFVSLpcLhQJAa/Vxa25upFJSqvHxCcd277v37QsXDLa3d/X1Dpw8NTw1PTF3Xv/8eQtGL5a+/rVvSal+67d+U8rYtmxKnJMnhkvFak9PH6VYLM309/dv3nx7b2/3wMDc9ra+c+fOIAmzeXegf+DJJ5568cVdm+/cfPvmDYRqJJjP5dasWT1nzkDK4wYuUb1eYRhu5QdbLHVXSkdafIRSaddxwBgpBaMEwWitEAGUaq2oJgSlFIQQwBYd6ptfzkI0AtEt2gds1ckb1AQMt3loVE9Pvrunfe7s3vsfuDvtZcIkPnBov+un5sweLOStiXF47DtPPPLII2Njow89/HXC4o9+9J0bNi7+7Gc+Nz6emzdv0do1qxYvGrAdsGyCRIZRwxjNKWfMEQkAWGAAsLV2XV9W0Ba5Uqu1qvWwjMGFCwYtyzWa1ut1z812dLSnUl6jKWyH1hvVvXsPDJ8Zed8Hfp4QNJAQxhcNzvM8Z2RkbGamtOqGBdm8E0UBISCl9Ly077vNoF6tRgMDc44fP7F9+4vpdOaBB+4Lw5plUwR6441rkiTxfU+L+o/BuPCDjCk/yIJzLYg8ADRe7YJdWgoRJ4FIRGCEVMZxWL6QOXbk+Bf+8asvbD8YBLSrc868OYtdJzd85uy5kxUN0ODBmeGj06WZ/rn+f/vvb8vl07VaQyuT9ZhRoHQMoBnjRoPWkMSSgkWA6Ktafolu6TJd1pWWtzxhRIOI2Vxueqpk23jy5PHx8dFlywfnzO0fHx/Zt28PY2T16uVKB46noqjIrbyftgzIJAkMCMsG23Fsm4dNU6nU6/V6EssVK9Yy6r68f0+tGr71LXdphRdHxqdnJtvbugcHB6UApdQbZWggrytMT97QkvIfKfWG+vtcBJfobjSllHFwPYtSWq3US6Xx3t62X/vYryxcuO+llw4fPnTqhQsjtpWWUgI083m2YLBr69bbLDupVMuUimYjpATQkGp1mhJ2Kd19if/WYowbqQEvkwLiFQ4E8gML3S8RQVCHApBKpUQI1Or1bduftWx6+x0b29razp29cPHixYGBgUzW1RBo1SCUKakAtNIxoAIUBhJjIAiCKKTZdPsXv/jFWf2969beRIkzOjJN0DYGP//5zx85tu/s2WHbytxzzz1vvWdzd0/eICFwLViFryGPkjZIXmNhsyEqEaB0vVK2bTuT8mIpZCwKBe8X3rPlnns3lUql4eHh0YsXm816JustWDi7b1bnwECvkrFt5+I4bjaDtraOoNHkdmv5MGqtW1wKCIZQpa7woCFBo9GwFoEIAjHfZ5BqFdkAIiGUNBpBNtMWx+LBbzx08tSxj/zqf5k1qzdOZL0R1hpVypE7BpmqlMrdXbOLgRRKeinXS1tAJVKDYCnDPD/9l3/1d1KL++5/Z0/vQKlUqlSiOAHKrHvvv+/uezaHYfzH//OTDz746LIVS9vaM5y/IQD+Tbq6H6Xe6EfQ1Ncuk5FSdnR3J2E8NTUhhHJdFykBUFo30ylIp1I93UOcLeGcRlHALcYYazaqqAElgiEeT4umosZSSsZGtWhcOecAWkoZxyHj5BKCyC4rKwHDjHlFjMUYA0iMMWEY+156enr68OGjzz779Hvf+67lKxanUikDpFSsc25ThtokqEU6nY7CpFxScaS6uzsLhZzWCSdMxBg0k8e/+439L+/+r//1fx8cHMznnQMH91Yqlba2/Jq1Kzo6c67XaTTcfffdX/3qV8fGLsyd297WloJrJa+XR+kNa6pGDWiu4riEFi8BI7wyXUKkhVwbIazZbGohvbQnRUwpJYRpQGoYA8sCwgxRkUpZOc55s9mkFBlnQb3p+L5rZxKpkiRJpCZEUQaUImVM6RAQW4yhBull8qYr7SRXrW9EAMhm8uPj40ePHv/CFz7/m7/520NDQ5Vq1XEcpYgUHIFzzoWIQSWZTK44HU+OV5qNZGjJ7Pb2AqWUEHrx/Myxo6efeeaJP/uLP/A8L4qmE5WjPNHQzObyvbNy9ca07WXqjaijM0uoCKKS6wO8wbEXr1p0av51OA0CmmtmU19LLMtJkoQQVMrEccg557YTJREhBkFTBIoEAZTQQihEypCFYSyihNsctFRC+ClXK12r1Si3OOeIqLXURmit8RUFVxqAvvIJtDjviAHUQIxGADI6OvnCthePHj36x3/yiXQ6LZWOkmT3nn0Dswbz+XytVgmCBueukKpWFZ6bP3JkO4C+4YZV8+cvnCmdHx8rHT92/ujRk5/4xJ/bDlFKVGvlqekJx7EtiwRhZXzi4rz5/dVq2fezI6NntUl6e7sty4JrJ2jefPN7mWmBEE2JIVeOS8OvFoShQa1Btd4ILQijSJgBIpRECgaNAsEdNERIEMwmhFNlpAYwiEIpBYo7lFClTax0ZEAiGgBiNAFjE/SQuEIioZwwjJI6YQoJSCkJ48h4GBsliVZ8aqr23HO7RkZKv/7rv53JdANNVRvqGw8+Wq42Mlkvk7X7+gsjIxcmx2ugU2mvZ3KivHvPjpWrFw0M9BsNYyP17333RSnh1z72G5Q4aNwoIN/65lPF6Wh2/2Ch0B4EUdCUQcO4dkEKfPHF7atXrxzon29bGYCrF0f/mwcYhCu8rPAaxyumGK/TB2bXzg17LWpE/apPr379V4lliNFgNAVDsMWIBcAtks2lCAFEjOOYEJZOpy3uvHzg6KOPfmfvvpcXLRr6+7//9HSxmMlkLo5eqFQqQ0NDQkYLF81Zu27VE0888dRTz7znPe85d27ks5/97PIVg1u23D5n7qwdO3Y98sijY2NjbW1tJ06ciOM4SZKxsTHLYps23ZFKpVauXP4vjz7y9NNPDwx8aHx88sknv5eI8O3vuL+vrz8Mkmuqq9dySvMfJC0sr+wF1eKJS5KIUmozLoVJkqDRaFwcOXPmzEkwMgirU9OjiZRx0gAj1629oae33bIhn/Pv3brF6Pjb3/r63j072tvb58yevX79TfPmzUrixtTkSBTWGNXNRrlWnbFtGwAQxLKly9oKWc+17t6y2XXp17/+9Rd3PNvX1+f7/p/+yR/1988KgsBxLa3+4zfUwJ+i7auv7Bl0pUaVEADUSimCTGvQCm03TQirNwLHcScnJ9PprEHdaDS4bducWxa3LVIuFzOZHOf8/PnznufV682enh7btpU0UsrW1j+tBX2c8yiKAMBxnMubPGErQimlrNer+XxbvV7NZrOUYhjG7W35KKj/yIza/+lAbUVKW9wwLX5EYwwhgKCklJxb3HKk1EmstAYNxLKsWCSpVCaKAsdxLIdPTUz6KdcYTQkksRRCMMby+XwUxa0lG4gUERFoK/SolGqxMBpjXNcNwxAAHNeq1WrptE8prVYrnFuOYwOA0iKJpdLC4db14fcNFBu/ao8vrbVS2nOtFj1CFEWUOYwzQhgCCeIwm0k3m9VECspMs1QxIJVKwCjbsuNY2A61bWumOIFIWzQzlsWMxjgOAcCyLEJNIiIkzPXcWq3Y2joGQHFOEhHqWOcL6TgWM8WJbDYrRJxKZRoN8ROhAD8toLZ2LGzpTcu4tnYyrNXqxphWmYhj2RSJECJOIte2RBwRMNmMD0ZyBt1dbQgSjQKtCGiKRiaRzalnWxYlrsVVEidRwAjYnKJRaJRrc0aAgOYUPcdKoiAKapwaixJQ0ihRKc4MzOo1SqQ8t14t+679Hz72/jSBegXIq/NZlNJUKkUIlVJrDa3lb60taIwxQRBwTo1UURQYY5rNZqs0MI5jQojjOFEUEUKUFgZUFAfaSM4pY8QYJUSrHMkwRorFaQDdOu/7vtZaqsTznXq9ni9kW5nRMAx9338tTsHrNvVHaMAlrqxX7x5gXp260ldltPQP7c3/Znrrh7I+Xrqm+QnQk5/+DfxavCw/lIvm6r2myGXYLlP/v+r19SQszQ/5beua5ifief7U7/VmkLz2DhDmSlyNvPr70KKGeK3XNzBEvOYVfiJ2Uv6Z22rzFWybP6y9P+z1jT63H/861zX1h5iyV0DYSsmhJq+oFvg39+f7mdKKn/6tNi9v4XjZhbnEsP+GesWP16nIdVCvhVm9VFKD5gpIr7GdSyt99wPn32QrSH4Ctmf9GbCpujWxQfMj/vZNuYHrmvrmagbRr9aPf81nea1v/qzJz0KrXj+i/0nkP3Xjr4N6Xa6Del2ug3pdroN6Xa6Deh3U63Id1OtyHdTrch3U63Id1OtyHdSfUfn/ATQlHf5uxd0fAAAAAElFTkSuQmCC';
+
+  // Helper: build one Plan on a Page slide
+  function buildSlide(slideAttendees, slideLabel, showExecOnly) {
+    // slideLabel: null = standard; 'CM' or 'LD' = mixed mode
+    // showExecOnly: false = show all sessions; for LD slide, exec sessions shown as observer-only
+    const slide = pres.addSlide();
+  slide.background = { color: PEARL };
+
+  // Left orange rule
+  slide.addShape(pres.shapes.RECTANGLE, { x:0,y:0,w:0.04,h:H, fill:{color:ORANGE},line:{color:ORANGE} });
+
+  // Company logo placeholder (top right)
+  slide.addShape(pres.shapes.RECTANGLE, { x:W-2.4,y:0.18,w:2.1,h:0.72, fill:{color:PEARL_DARK},line:{color:SAND,width:0.8} });
+  slide.addText('[ Insert company logo ]', { x:W-2.4,y:0.18,w:2.1,h:0.72, fontSize:9,fontFace:SANS,color:SAND,align:'center',valign:'middle',italic:true,margin:0 });
+
+  // Header
+  slide.addText(company, { x:PAD,y:0.14,w:W-2.8,h:0.36, fontSize:24,fontFace:SANS,color:CHARCOAL,bold:false,margin:0 });
+  const taglineSuffix = '';
+  slide.addText('Your plan on a page' + taglineSuffix, { x:PAD,y:0.48,w:10,h:0.22, fontSize:14,fontFace:SERIF,color:ORANGE,italic:true,margin:0 });
+  slide.addText('WBCSD Annual Meeting 2026  ·  27–30 April  ·  Fairmont Le Montreux Palace, Montreux', { x:PAD,y:0.70,w:10,h:0.18, fontSize:9.5,fontFace:SANS,color:SPRUCE,margin:0 });
+  slide.addShape(pres.shapes.LINE, { x:PAD,y:0.92,w:W-PAD-0.28,h:0, line:{color:SAND,width:0.5} });
+
+  // Meta strip — attendees only (compact single row)
+  const metaY = 0.98;
+  slide.addText('Attendees', { x:PAD,y:metaY,w:W-PAD-0.28,h:0.15, fontSize:8,fontFace:SANS,color:ORANGE,charSpacing:1,margin:0 });
+  slideAttendees.slice(0,4).forEach((a,i) => {
+    const ax = PAD + i * 3.0;
+    slide.addText(a.name, { x:ax,y:metaY+0.16,w:2.8,h:0.18, fontSize:11,fontFace:SANS,color:CHARCOAL,margin:0 });
+    if (a.role) slide.addText(a.role, { x:ax,y:metaY+0.32,w:2.8,h:0.14, fontSize:8.5,fontFace:SANS,color:SPRUCE,margin:0 });
+  });
+  slide.addShape(pres.shapes.LINE, { x:PAD,y:metaY+0.52,w:W-PAD-0.28,h:0, line:{color:SAND,width:0.5} });
+
+  // ── CONTENT LAYOUT ─────────────────────────────────────────────────────────
+  const contentY = metaY + 0.60;
+  const contentH = H - contentY - 0.16;
+  const sessW = 8.3;
+  const bilatX = PAD + sessW + 0.18;
+  const bilatW = W - bilatX - 0.28;
+
+  slide.addShape(pres.shapes.LINE, { x:PAD+sessW+0.09,y:contentY,w:0,h:contentH, line:{color:SAND,width:0.5} });
+  slide.addText('Recommended sessions', { x:PAD,y:contentY,w:5,h:0.2, fontSize:9,fontFace:SANS,color:ORANGE,charSpacing:1,margin:0 });
+
+  const dayStartY = contentY + 0.20;
+  const monInviteSelected = [...document.querySelectorAll('#mondayEventsGrid input:checked')].length > 0;
+  const showMonday = eduDay || monInviteSelected;
+  const activeDays = showMonday ? ['Mon','Tue','Wed','Thu'] : ['Tue','Wed','Thu'];
+  const numDays = activeDays.length;
+  const dayColW = (sessW - (numDays-1)*0.04) / numDays;
+  const dayXs = activeDays.map((_,i) => PAD + i*(dayColW+0.04));
+  const dayLabels = {Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday'};
+  const dayDates  = {Mon:'27 April',Tue:'28 April',Wed:'29 April',Thu:'30 April'};
+
+  activeDays.forEach((day,i) => {
+    const x = dayXs[i];
+    slide.addShape(pres.shapes.RECTANGLE, { x,y:dayStartY,w:dayColW,h:0.28, fill:{color:OLIVE},line:{color:OLIVE} });
+    slide.addText(dayLabels[day]+' · '+dayDates[day], { x:x+0.10,y:dayStartY+0.04,w:dayColW-0.16,h:0.20, fontSize:11,fontFace:SANS,color:WHITE,bold:false,margin:0 });
+    if (i < activeDays.length-1) slide.addShape(pres.shapes.LINE, { x:x+dayColW+0.02,y:dayStartY,w:0,h:contentH-0.20, line:{color:SAND,width:0.4} });
+  });
+
+  // Dynamic slot height: divide available space by number of items in the column
+  // shrinkText ensures long titles never overflow their box
+  function addDayCol(x, colW, startY, list) {
+    if (!list.length) return;
+    const availH = H - startY - 0.65; // leave room for checklist/footer
+    const slotH = Math.min(availH / list.length, 0.72); // cap at 0.72" max
+    const titleH = slotH * 0.54;
+    const timeH  = slotH * 0.28;
+    list.forEach((s, i) => {
+      const y = startY + i * slotH;
+      const last = i === list.length - 1;
+      if (s.social) {
+        slide.addShape(pres.shapes.RECTANGLE, { x:x+0.08,y:y+0.01,w:colW-0.16,h:slotH-0.04, fill:{color:SAND},line:{color:SAND} });
+        slide.addText(s.title, { x:x+0.16,y:y+0.03,w:colW-0.30,h:titleH, fontSize:9.5,fontFace:SERIF,color:CHARCOAL,italic:true,margin:0,shrinkText:true });
+        slide.addText(s.time,  { x:x+0.16,y:y+titleH+0.03,w:colW-0.30,h:timeH, fontSize:8,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
+      } else {
+        const isExecSess = s.exec && slideLabel !== null;
+        const titlePrefix = isExecSess ? '⭐ ' : '';
+        const titleColor = (isExecSess && slideLabel === 'LD') ? SPRUCE : CHARCOAL;
+        slide.addText(titlePrefix + s.title + (isExecSess && slideLabel === 'LD' ? ' (observer)' : ''), { x:x+0.10,y:y+0.02,w:colW-0.20,h:titleH, fontSize:9.5,fontFace:SANS,color:titleColor,margin:0,shrinkText:true });
+        slide.addText(s.time,  { x:x+0.10,y:y+titleH+0.02,w:colW-0.20,h:timeH, fontSize:8,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
+      }
+      if (!last) slide.addShape(pres.shapes.LINE, { x:x+0.10,y:y+slotH-0.02,w:colW-0.22,h:0, line:{color:SAND,width:0.3} });
+    });
+  }
+
+  // Monday: community invite-only events + optional edu day sessions
+  if (showMonday) {
+    const monSessions = sessions.filter(s => s.day === 'Mon' && (eduDay || s.id > 52));
+    const monX = dayXs[0];
+    // Build combined list: invite-only events as pseudo-sessions, then edu day sessions
+    const monInviteItems = monEvents.map(key => ({
+      title: MON_EVENTS[key].label,
+      time: MON_EVENTS[key].time + '  ·  Invite-only',
+      social: false, id: -1
+    }));
+    const monAll = [...monInviteItems, ...monSessions];
+    addDayCol(monX, dayColW, dayStartY + 0.32, monAll);
+  }
+
+  // Tue/Wed/Thu sessions
+  const startIdx = showMonday ? 1 : 0;
+  activeDays.slice(startIdx).forEach((day, idx) => {
+    const x = dayXs[startIdx + idx];
+    const list = sessions.filter(s => s.day === day);
+    addDayCol(x, dayColW, dayStartY + 0.32, list);
+  });
+
+  // ── BILATERALS ──────────────────────────────────────────────────────────────
+  slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:contentY,w:bilatW,h:0.36, fill:{color:CHARCOAL},line:{color:CHARCOAL} });
+  slide.addText('Bilateral meetings', { x:bilatX+0.16,y:contentY,w:bilatW-0.2,h:0.36, fontSize:13,fontFace:SANS,color:WHITE,bold:false,valign:'middle',margin:0 });
+
+  let by = contentY + 0.44;
+  bilats.forEach(b => {
+    const cardH = 0.78;
+    slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:by,w:bilatW,h:cardH, fill:{color:PEARL_DARK},line:{color:SAND,width:0.5} });
+    slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:by,w:0.04,h:cardH, fill:{color:ORANGE},line:{color:ORANGE} });
+    slide.addText(b.name, { x:bilatX+0.14,y:by+0.06,w:bilatW-0.2,h:0.20, fontSize:12,fontFace:SANS,color:CHARCOAL,bold:false,margin:0 });
+    if (b.role) slide.addText(b.role, { x:bilatX+0.14,y:by+0.24,w:bilatW-0.2,h:0.16, fontSize:9.5,fontFace:SANS,color:SPRUCE,margin:0 });
+    const forLabel = b.forGroup === 'CM' ? '(A)CM only' : b.forGroup === 'LD' ? '(A)LD only' : '';
+    const timeRoomParts = [b.time, b.room ? 'Room: '+b.room : '', forLabel].filter(Boolean).join('  ·  ');
+    if (timeRoomParts) slide.addText(timeRoomParts, { x:bilatX+0.14,y:by+0.42,w:bilatW-0.2,h:0.16, fontSize:9.5,fontFace:SERIF,color:ORANGE,italic:true,margin:0 });
+    by += cardH + 0.08;
+  });
+
+  if (others.length) {
+    slide.addText('Others to connect with', { x:bilatX+0.14,y:by+0.08,w:bilatW-0.2,h:0.18, fontSize:9,fontFace:SANS,color:ORANGE,charSpacing:1,margin:0 });
+    others.forEach((o,i) => {
+      slide.addText('\u2192  '+o, { x:bilatX+0.14,y:by+0.28+i*0.20,w:bilatW-0.2,h:0.18, fontSize:10.5,fontFace:SANS,color:CHARCOAL,margin:0 });
+    });
+    by += 0.28 + others.length * 0.20 + 0.10;
+  }
+
+  // ── DINNER & TRANSPORT NOTES ──────────────────────────────────────────────
+  const dinnerNotes = [];
+  if (isCM) dinnerNotes.push('Transportation for the Monday Executive Dinner: WBCSD will provide transportation by bus from the main venue and from IMD Business School (Lausanne). Return transportation to Montreux will also be available.');
+  if (isCM || isMixed) dinnerNotes.push('The Tuesday CM Networking Dinner is a 15-minute walk from the Fairmont Hotel.');
+  if (isLD || isMixed) dinnerNotes.push('For the LD Dinner: the restaurant is a 14-minute walk from the Fairmont Hotel.');
+
+  if (dinnerNotes.length) {
+    slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:by+0.05,w:bilatW,h:0.01, fill:{color:SAND},line:{color:SAND} });
+    dinnerNotes.forEach((note, i) => {
+      slide.addText(note, {
+        x:bilatX+0.14, y:by+0.10+i*0.36, w:bilatW-0.2, h:0.34,
+        fontSize:8, fontFace:SANS, color:SPRUCE, margin:0, shrinkText:true
+      });
+    });
+  }
+
+  // ── CHECKLIST ───────────────────────────────────────────────────────────────
+  const checkY = H - 0.85;
+  slide.addShape(pres.shapes.LINE, { x:bilatX,y:checkY-0.08,w:bilatW,h:0, line:{color:SAND,width:0.5} });
+  slide.addText('Before you arrive', { x:bilatX+0.14,y:checkY-0.06,w:bilatW-0.2,h:0.14, fontSize:8.5,fontFace:SANS,color:ORANGE,charSpacing:1,margin:0 });
+  slide.addText('⭐ = Executive track session. (A)LDs welcome to observe.', { x:bilatX+0.14,y:checkY+0.10,w:bilatW-0.18,h:0.14, fontSize:7.5,fontFace:SANS,color:SPRUCE,italic:true,margin:0 });
+  const checks = [
+    '\u25A1  Download our WBCSD Events App, instructions were provided via email by Events@wbcsd.org with subject line: Annual Meeting 2026 App Invite',
+    isLD ? '\u25A1  LD Dinner (Tue 28) \u2014 one attendee per company' :
+    isProspect ? '\u25A1  Prospect Cocktail \u2014 Tuesday 17:15, MP Bar' :
+    '\u25A1  Check agenda for any last-minute updates'
+  ];
+  checks.forEach((t,i) => {
+    slide.addText(t, { x:bilatX+0.14,y:checkY+0.26+i*0.22,w:bilatW-0.18,h:0.20, fontSize:8.5,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
+  });
+
+  // ── FOOTER ──────────────────────────────────────────────────────────────────
+  // WBCSD logo (bottom left)
+  slide.addImage({ data: 'image/png;base64,' + wbcsdLogoB64, x:PAD, y:H-0.52, w:0.78, h:0.44 });
+
+  } // end buildSlide
+
+  // ── GENERATE SLIDES ───────────────────────────────────────────────────────
+  // Single slide always — CMLD shows all sessions with ⭐ on exec tracks
+  buildSlide(attendees, isMixed ? 'CMLD' : null, false);
+
+  const filename = (company.replace(/\s+/g,'_') || 'Member') + '_Plan_on_a_Page_AM26.pptx';
+  await pres.writeFile({ fileName: filename });
+  btn.style.display = ''; msg.classList.remove('show');
+}
+
+init();
+</script>
+</body>
+</html>
