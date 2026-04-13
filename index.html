@@ -336,7 +336,7 @@ const ALL_SESSIONS = [
   { id: 9,  day: "Tue", dayFull: "Tuesday 28", time: "14:30 – 15:30", title: "Risk transfer of physical risk — at what price?", social: false, exec: true, tags: ["Physical risk & resilience","Finance & risk"] },
   { id: 10, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "ESG ratings: friend or foe? A debate", social: false, exec: false, tags: ["Corporate reporting","Finance & risk","Carbon markets & pricing"] },
   { id: 11, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "From hotspots to solutions: enabling targeted emissions reduction (ERA)", social: false, exec: false, tags: ["Value chain & Scope 3","Carbon removal & CDR"] },
-  { id: 54, day: "Tue", dayFull: "Tuesday 28", time: "17:15 – 18:30", title: "★ Prospect Dinner", social: true, exec: false, tags: [], prospectOnly: true },
+  { id: 54, day: "Tue", dayFull: "Tuesday 28", time: "17:15 – 18:30", title: "★ Networking Cocktail", social: true, exec: false, tags: [], prospectOnly: true },
   { id: 12, day: "Tue", dayFull: "Tuesday 28", time: "18:00 – 22:00", title: "★ Liaison Delegate Dinner", social: true, exec: false, tags: [], ldOnly: true },
   { id: 55, day: "Tue", dayFull: "Tuesday 28", time: "18:30 – 22:00", title: "★ Council Member Networking Dinner", social: true, exec: true, tags: [], cmOnly: true },
 
@@ -475,7 +475,7 @@ function updateMemberType() {
     LD:      "Liaison Delegate → LD Dinner automatically added for Tuesday 28 April. One attendee per company.",
     ALD:     "Alternate Liaison Delegate → LD Dinner automatically added for Tuesday 28 April. One attendee per company.",
     CMLD:    "Mixed CM + LD → One slide will be generated with all sessions. Executive track sessions marked ⭐ — (A)LDs welcome to observe. All three dinners auto-added.",
-    Prospect:"Prospect → Formal programme sessions available. Prospect Dinner added for Tuesday 17:15–18:30 at MP's Bar. No other social events."
+    Prospect:"Prospect → Formal programme sessions available. Networking Cocktail added for Tuesday 17:15–18:30 at MP's Bar. No other social events."
   };
   box.style.display = 'block';
   box.textContent = msgs[val];
@@ -1002,7 +1002,7 @@ async function generatePPTX() {
   const checks = [
     '\u25A1  All sessions are first come first serve with no separate registration. Dinners do require advanced registration.',
     isLD ? '\u25A1  LD Dinner (Tue 28) \u2014 one attendee per company' :
-    isProspect ? '\u25A1  Prospect Dinner \u2014 Tuesday 17:15\u201318:30, MP\u2019s Bar' :
+    isProspect ? '\u25A1  Networking Cocktail \u2014 Tuesday 17:15\u201318:30, MP\u2019s Bar' :
     '\u25A1  Check agenda for any last-minute updates'
   ];
   checks.forEach((t,i) => {
