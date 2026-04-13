@@ -7,9 +7,9 @@
 <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
 <style>
   :root {
-    --pearl: #F0EDE6; --pearl-dark: #E0DDD5; --charcoal: #2A2825;
-    --orange: #F8781E; --olive: #61704B; --spruce: #465C66;
-    --sand: #CAB6A5; --sage: #C3CBB6; --white: #FFFFFF; --radius: 6px;
+    --pearl: #EEF2F5; --pearl-dark: #D8E2E9; --charcoal: #11204C;
+    --orange: #F8781E; --olive: #11204C; --spruce: #465C66;
+    --sand: #CAB6A5; --sage: #B9C8D3; --white: #FFFFFF; --radius: 6px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Georgia', serif; background: var(--pearl); color: var(--charcoal); min-height: 100vh; }
@@ -184,6 +184,7 @@
         <label class="mon-event-pill"><input type="checkbox" value="GCP" onchange="onMonInviteChange()"><span>♻️ Global Circularity Protocol</span></label>
         <label class="mon-event-pill"><input type="checkbox" value="CMC" onchange="onMonInviteChange()"><span>⚙️ Critical Materials Collective</span></label>
         <label class="mon-event-pill"><input type="checkbox" value="FSG" onchange="onMonInviteChange()"><span>🌲 Forest Solutions Group</span></label>
+        <label class="mon-event-pill"><input type="checkbox" value="BEB" onchange="onMonInviteChange()"><span>🏗️ Built Environment Board Members</span></label>
       </div>
 
       <div id="memberTypeInfo" class="info-box" style="display:none; margin-top:1rem;"></div>
@@ -251,7 +252,7 @@
       <button class="add-btn" onclick="addBilat()">+ Add bilateral meeting</button>
 
       <hr class="section-divider">
-      <p class="section-title">Others to connect with</p>
+      <p class="section-title">Other Details to Note</p>
       <div class="form-group">
         <label>Names or groups (one per line)</label>
         <textarea id="othersConnect" placeholder="e.g. WBCSD Carbon Removals program leads&#10;ERA program team&#10;CDR corporate buyer network" oninput="updatePreview()"></textarea>
@@ -308,10 +309,11 @@ const FOCUS_AREAS = [
 ];
 
 const MON_EVENTS = {
-  GNP: { label: "Global Network Partners meeting", time: "10:30 – 16:00", location: "Montreux (invite-only)" },
-  GCP: { label: "Global Circularity Protocol Community meeting", time: "10:30 – 16:00", location: "Montreux (invite-only)" },
-  CMC: { label: "Critical Materials Collective", time: "10:30 – 16:00", location: "Montreux (invite-only)" },
-  FSG: { label: "Forest Solutions Group meeting", time: "10:30 – 16:00", location: "Montreux (invite-only)" }
+  GNP: { label: "Global Network Partners meeting", time: "09:00 – 17:15", location: "Montreux (invite-only)" },
+  GCP: { label: "Global Circularity Protocol Community meeting", time: "08:30 – 17:30 + cocktail 17:30–19:00", location: "Montreux (invite-only)" },
+  CMC: { label: "Critical Materials Collective", time: "09:00 – 16:00", location: "Montreux (invite-only)" },
+  FSG: { label: "Forest Solutions Group meeting", time: "10:00 – 17:00", location: "Montreux (invite-only)" },
+  BEB: { label: "Built Environment Pathway Board Members", time: "16:00 – 17:00", location: "Montreux (invite-only)" }
 };
 
 const ALL_SESSIONS = [
@@ -334,7 +336,7 @@ const ALL_SESSIONS = [
   { id: 9,  day: "Tue", dayFull: "Tuesday 28", time: "14:30 – 15:30", title: "Risk transfer of physical risk — at what price?", social: false, exec: true, tags: ["Physical risk & resilience","Finance & risk"] },
   { id: 10, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "ESG ratings: friend or foe? A debate", social: false, exec: false, tags: ["Corporate reporting","Finance & risk","Carbon markets & pricing"] },
   { id: 11, day: "Tue", dayFull: "Tuesday 28", time: "16:00 – 17:00", title: "From hotspots to solutions: enabling targeted emissions reduction (ERA)", social: false, exec: false, tags: ["Value chain & Scope 3","Carbon removal & CDR"] },
-  { id: 54, day: "Tue", dayFull: "Tuesday 28", time: "17:15 – 18:45", title: "★ Prospect Cocktail", social: true, exec: false, tags: [], prospectOnly: true },
+  { id: 54, day: "Tue", dayFull: "Tuesday 28", time: "17:15 – 18:30", title: "★ Prospect Dinner", social: true, exec: false, tags: [], prospectOnly: true },
   { id: 12, day: "Tue", dayFull: "Tuesday 28", time: "18:00 – 22:00", title: "★ Liaison Delegate Dinner", social: true, exec: false, tags: [], ldOnly: true },
   { id: 55, day: "Tue", dayFull: "Tuesday 28", time: "18:30 – 22:00", title: "★ Council Member Networking Dinner", social: true, exec: true, tags: [], cmOnly: true },
 
@@ -473,7 +475,7 @@ function updateMemberType() {
     LD:      "Liaison Delegate → LD Dinner automatically added for Tuesday 28 April. One attendee per company.",
     ALD:     "Alternate Liaison Delegate → LD Dinner automatically added for Tuesday 28 April. One attendee per company.",
     CMLD:    "Mixed CM + LD → One slide will be generated with all sessions. Executive track sessions marked ⭐ — (A)LDs welcome to observe. All three dinners auto-added.",
-    Prospect:"Prospect → Formal programme sessions available. Prospect Cocktail added for Tuesday 17:15 at MP Bar. No other social events."
+    Prospect:"Prospect → Formal programme sessions available. Prospect Dinner added for Tuesday 17:15–18:30 at MP's Bar. No other social events."
   };
   box.style.display = 'block';
   box.textContent = msgs[val];
@@ -827,8 +829,8 @@ async function generatePPTX() {
   const others  = getOthers();
   const sessions = [...selectedSessions].map(id => ALL_SESSIONS.find(s=>s.id===id)).filter(Boolean).sort((a,b) => { const dayOrder = {Mon:0,Tue:1,Wed:2,Thu:3}; const dayDiff = dayOrder[a.day] - dayOrder[b.day]; if (dayDiff !== 0) return dayDiff; if (a.social !== b.social) return a.social ? 1 : -1; return a.time.localeCompare(b.time); });
 
-  const PEARL='F0EDE6', PEARL_DARK='E0DDD5', CHARCOAL='2A2825', ORANGE='F8781E',
-        OLIVE='61704B', SPRUCE='465C66', SAND='CAB6A5', SAGE='C3CBB6', WHITE='FFFFFF';
+  const PEARL='EEF2F5', PEARL_DARK='D8E2E9', CHARCOAL='11204C', ORANGE='F8781E',
+        OLIVE='11204C', SPRUCE='465C66', SAND='CAB6A5', SAGE='B9C8D3', WHITE='FFFFFF';
   const SANS='Arial', SERIF='Times New Roman';
   const W=13.3, H=7.5, PAD=0.32;
 
@@ -899,23 +901,26 @@ async function generatePPTX() {
   // shrinkText ensures long titles never overflow their box
   function addDayCol(x, colW, startY, list) {
     if (!list.length) return;
-    const availH = H - startY - 0.65; // leave room for checklist/footer
-    const slotH = Math.min(availH / list.length, 0.72); // cap at 0.72" max
-    const titleH = slotH * 0.54;
-    const timeH  = slotH * 0.28;
+    const availH = H - startY - 0.65;
+    const slotH = Math.min(availH / list.length, 0.72);
+    // Reserve fixed 0.18" for the time line at the bottom of each slot
+    // Title gets everything above that minus a small top pad
+    const timH  = 0.18;
+    const titY  = 0.02;  // top padding inside slot
+    const titH  = slotH - timH - titY - 0.06; // 0.06 gap between title and time
+    const timeY = titY + titH + 0.06;
     list.forEach((s, i) => {
       const y = startY + i * slotH;
       const last = i === list.length - 1;
       if (s.social) {
         slide.addShape(pres.shapes.RECTANGLE, { x:x+0.08,y:y+0.01,w:colW-0.16,h:slotH-0.04, fill:{color:SAND},line:{color:SAND} });
-        slide.addText(s.title, { x:x+0.16,y:y+0.03,w:colW-0.30,h:titleH, fontSize:9.5,fontFace:SERIF,color:CHARCOAL,italic:true,margin:0,shrinkText:true });
-        slide.addText(s.time,  { x:x+0.16,y:y+titleH+0.03,w:colW-0.30,h:timeH, fontSize:8,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
+        slide.addText(s.title, { x:x+0.16,y:y+titY,w:colW-0.30,h:titH, fontSize:9.5,fontFace:SERIF,color:CHARCOAL,italic:true,margin:0,shrinkText:true,lineSpacingMultiple:1.1 });
+        slide.addText(s.time,  { x:x+0.16,y:y+timeY,w:colW-0.30,h:timH, fontSize:8,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
       } else {
-        const isExecSess = s.exec && slideLabel !== null;
+        const isExecSess = s.exec;
         const titlePrefix = isExecSess ? '⭐ ' : '';
-        const titleColor = (isExecSess && slideLabel === 'LD') ? SPRUCE : CHARCOAL;
-        slide.addText(titlePrefix + s.title + (isExecSess && slideLabel === 'LD' ? ' (observer)' : ''), { x:x+0.10,y:y+0.02,w:colW-0.20,h:titleH, fontSize:9.5,fontFace:SANS,color:titleColor,margin:0,shrinkText:true });
-        slide.addText(s.time,  { x:x+0.10,y:y+titleH+0.02,w:colW-0.20,h:timeH, fontSize:8,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
+        slide.addText(titlePrefix + s.title, { x:x+0.10,y:y+titY,w:colW-0.20,h:titH, fontSize:9.5,fontFace:SANS,color:CHARCOAL,margin:0,shrinkText:true,lineSpacingMultiple:1.1 });
+        slide.addText(s.time,  { x:x+0.10,y:y+timeY,w:colW-0.20,h:timH, fontSize:8,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
       }
       if (!last) slide.addShape(pres.shapes.LINE, { x:x+0.10,y:y+slotH-0.02,w:colW-0.22,h:0, line:{color:SAND,width:0.3} });
     });
@@ -944,28 +949,31 @@ async function generatePPTX() {
   });
 
   // ── BILATERALS ──────────────────────────────────────────────────────────────
-  slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:contentY,w:bilatW,h:0.36, fill:{color:CHARCOAL},line:{color:CHARCOAL} });
-  slide.addText('Bilateral meetings', { x:bilatX+0.16,y:contentY,w:bilatW-0.2,h:0.36, fontSize:13,fontFace:SANS,color:WHITE,bold:false,valign:'middle',margin:0 });
+  // Standard font size for the whole right column
+  const RF = 10; // right-column body font size (pt) — consistent throughout
 
-  let by = contentY + 0.44;
+  slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:contentY,w:bilatW,h:0.38, fill:{color:CHARCOAL},line:{color:CHARCOAL} });
+  slide.addText('Bilateral meetings', { x:bilatX+0.16,y:contentY,w:bilatW-0.2,h:0.38, fontSize:13,fontFace:SANS,color:WHITE,bold:false,valign:'middle',margin:0 });
+
+  let by = contentY + 0.48;
   bilats.forEach(b => {
-    const cardH = 0.78;
+    const cardH = 0.90;
     slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:by,w:bilatW,h:cardH, fill:{color:PEARL_DARK},line:{color:SAND,width:0.5} });
     slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:by,w:0.04,h:cardH, fill:{color:ORANGE},line:{color:ORANGE} });
-    slide.addText(b.name, { x:bilatX+0.14,y:by+0.06,w:bilatW-0.2,h:0.20, fontSize:12,fontFace:SANS,color:CHARCOAL,bold:false,margin:0 });
-    if (b.role) slide.addText(b.role, { x:bilatX+0.14,y:by+0.24,w:bilatW-0.2,h:0.16, fontSize:9.5,fontFace:SANS,color:SPRUCE,margin:0 });
+    slide.addText(b.name, { x:bilatX+0.14,y:by+0.07,w:bilatW-0.2,h:0.22, fontSize:RF+2,fontFace:SANS,color:CHARCOAL,bold:false,margin:0 });
+    if (b.role) slide.addText(b.role, { x:bilatX+0.14,y:by+0.30,w:bilatW-0.2,h:0.20, fontSize:RF,fontFace:SANS,color:SPRUCE,margin:0 });
     const forLabel = b.forGroup === 'CM' ? '(A)CM only' : b.forGroup === 'LD' ? '(A)LD only' : '';
     const timeRoomParts = [b.time, b.room ? 'Room: '+b.room : '', forLabel].filter(Boolean).join('  ·  ');
-    if (timeRoomParts) slide.addText(timeRoomParts, { x:bilatX+0.14,y:by+0.42,w:bilatW-0.2,h:0.16, fontSize:9.5,fontFace:SERIF,color:ORANGE,italic:true,margin:0 });
-    by += cardH + 0.08;
+    if (timeRoomParts) slide.addText(timeRoomParts, { x:bilatX+0.14,y:by+0.52,w:bilatW-0.2,h:0.20, fontSize:RF,fontFace:SERIF,color:ORANGE,italic:true,margin:0 });
+    by += cardH + 0.10;
   });
 
   if (others.length) {
-    slide.addText('Others to connect with', { x:bilatX+0.14,y:by+0.08,w:bilatW-0.2,h:0.18, fontSize:9,fontFace:SANS,color:ORANGE,charSpacing:1,margin:0 });
+    slide.addText('Other Details to Note', { x:bilatX+0.14,y:by+0.10,w:bilatW-0.2,h:0.20, fontSize:RF,fontFace:SANS,color:ORANGE,charSpacing:1,margin:0 });
     others.forEach((o,i) => {
-      slide.addText('\u2192  '+o, { x:bilatX+0.14,y:by+0.28+i*0.20,w:bilatW-0.2,h:0.18, fontSize:10.5,fontFace:SANS,color:CHARCOAL,margin:0 });
+      slide.addText('\u2192  '+o, { x:bilatX+0.14,y:by+0.32+i*0.24,w:bilatW-0.2,h:0.22, fontSize:RF,fontFace:SANS,color:CHARCOAL,margin:0 });
     });
-    by += 0.28 + others.length * 0.20 + 0.10;
+    by += 0.32 + others.length * 0.24 + 0.14;
   }
 
   // ── DINNER & TRANSPORT NOTES ──────────────────────────────────────────────
@@ -975,28 +983,30 @@ async function generatePPTX() {
   if (isLD || isMixed) dinnerNotes.push('For the LD Dinner: the restaurant is a 14-minute walk from the Fairmont Hotel.');
 
   if (dinnerNotes.length) {
-    slide.addShape(pres.shapes.RECTANGLE, { x:bilatX,y:by+0.05,w:bilatW,h:0.01, fill:{color:SAND},line:{color:SAND} });
+    slide.addShape(pres.shapes.LINE, { x:bilatX,y:by+0.08,w:bilatW,h:0, line:{color:SAND,width:0.5} });
     dinnerNotes.forEach((note, i) => {
       slide.addText(note, {
-        x:bilatX+0.14, y:by+0.10+i*0.36, w:bilatW-0.2, h:0.34,
-        fontSize:8, fontFace:SANS, color:SPRUCE, margin:0, shrinkText:true
+        x:bilatX+0.14, y:by+0.14+i*0.40, w:bilatW-0.2, h:0.36,
+        fontSize:RF, fontFace:SANS, color:SPRUCE, margin:0, shrinkText:true
       });
     });
+    by += 0.14 + dinnerNotes.length * 0.40 + 0.10;
   }
 
   // ── CHECKLIST ───────────────────────────────────────────────────────────────
-  const checkY = H - 0.85;
-  slide.addShape(pres.shapes.LINE, { x:bilatX,y:checkY-0.08,w:bilatW,h:0, line:{color:SAND,width:0.5} });
-  slide.addText('Before you arrive', { x:bilatX+0.14,y:checkY-0.06,w:bilatW-0.2,h:0.14, fontSize:8.5,fontFace:SANS,color:ORANGE,charSpacing:1,margin:0 });
-  slide.addText('⭐ = Executive track session. (A)LDs welcome to observe.', { x:bilatX+0.14,y:checkY+0.10,w:bilatW-0.18,h:0.14, fontSize:7.5,fontFace:SANS,color:SPRUCE,italic:true,margin:0 });
+  // Anchor checklist from bottom — give it generous space
+  const checkY = H - 1.30;
+  slide.addShape(pres.shapes.LINE, { x:bilatX,y:checkY-0.10,w:bilatW,h:0, line:{color:SAND,width:0.5} });
+  slide.addText('Before you arrive', { x:bilatX+0.14,y:checkY-0.08,w:bilatW-0.2,h:0.18, fontSize:RF,fontFace:SANS,color:ORANGE,charSpacing:1,margin:0 });
+  slide.addText('⭐ = Executive track session. (A)LDs welcome to observe.', { x:bilatX+0.14,y:checkY+0.12,w:bilatW-0.18,h:0.16, fontSize:RF-1,fontFace:SANS,color:SPRUCE,italic:true,margin:0 });
   const checks = [
-    '\u25A1  Download our WBCSD Events App, instructions were provided via email by Events@wbcsd.org with subject line: Annual Meeting 2026 App Invite',
+    '\u25A1  All sessions are first come first serve with no separate registration. Dinners do require advanced registration.',
     isLD ? '\u25A1  LD Dinner (Tue 28) \u2014 one attendee per company' :
-    isProspect ? '\u25A1  Prospect Cocktail \u2014 Tuesday 17:15, MP Bar' :
+    isProspect ? '\u25A1  Prospect Dinner \u2014 Tuesday 17:15\u201318:30, MP\u2019s Bar' :
     '\u25A1  Check agenda for any last-minute updates'
   ];
   checks.forEach((t,i) => {
-    slide.addText(t, { x:bilatX+0.14,y:checkY+0.26+i*0.22,w:bilatW-0.18,h:0.20, fontSize:8.5,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
+    slide.addText(t, { x:bilatX+0.14,y:checkY+0.30+i*0.26,w:bilatW-0.18,h:0.24, fontSize:RF,fontFace:SANS,color:SPRUCE,margin:0,shrinkText:true });
   });
 
   // ── FOOTER ──────────────────────────────────────────────────────────────────
