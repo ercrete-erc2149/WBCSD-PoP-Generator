@@ -185,6 +185,7 @@
         <label class="mon-event-pill"><input type="checkbox" value="CMC" onchange="onMonInviteChange()"><span>⚙️ Critical Materials Collective</span></label>
         <label class="mon-event-pill"><input type="checkbox" value="FSG" onchange="onMonInviteChange()"><span>🌲 Forest Solutions Group</span></label>
         <label class="mon-event-pill"><input type="checkbox" value="BEB" onchange="onMonInviteChange()"><span>🏗️ Built Environment Board Members</span></label>
+        <label class="mon-event-pill"><input type="checkbox" value="FTD" onchange="onMonInviteChange()"><span>🍽️ First Timer's Welcome Dinner</span></label>
       </div>
 
       <div id="memberTypeInfo" class="info-box" style="display:none; margin-top:1rem;"></div>
@@ -313,7 +314,8 @@ const MON_EVENTS = {
   GCP: { label: "Global Circularity Protocol Community meeting", time: "08:30 – 17:30 + cocktail 17:30–19:00", location: "Montreux (invite-only)" },
   CMC: { label: "Critical Materials Collective", time: "09:00 – 16:00", location: "Montreux (invite-only)" },
   FSG: { label: "Forest Solutions Group meeting", time: "10:00 – 17:00", location: "Montreux (invite-only)" },
-  BEB: { label: "Built Environment Pathway Board Members", time: "16:00 – 17:00", location: "Montreux (invite-only)" }
+  BEB: { label: "Built Environment Pathway Board Members", time: "16:00 – 17:00", location: "Montreux (invite-only)" },
+  FTD: { label: "First Timer's Welcome Dinner", time: "19:00 – 21:00", location: "Caveau des Vignerons, Montreux" }
 };
 
 const ALL_SESSIONS = [
@@ -940,8 +942,8 @@ async function generatePPTX() {
     // Build combined list: invite-only events as pseudo-sessions, then edu day sessions
     const monInviteItems = monEvents.map(key => ({
       title: MON_EVENTS[key].label,
-      time: MON_EVENTS[key].time + '  ·  Invite-only',
-      social: false, id: -1
+      time: MON_EVENTS[key].time + (key === 'FTD' ? '  ·  ' + MON_EVENTS[key].location : '  ·  Invite-only'),
+      social: key === 'FTD', exec: false, id: -1
     }));
     const monAll = [...monInviteItems, ...monSessions];
     addDayCol(monX, dayColW, dayStartY + 0.32, monAll);
